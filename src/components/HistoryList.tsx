@@ -53,21 +53,21 @@ export default function HistoryList({ onBack, onOpenEntry }: Props) {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-4 py-10 sm:px-6 sm:py-16">
       <button
         onClick={onBack}
-        className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-zinc-500 hover:text-zinc-900 mb-10 dark:hover:text-white"
+        className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-zinc-500 hover:text-zinc-900 mb-8 sm:mb-10 min-h-[44px] dark:hover:text-white"
       >
         <ChevronLeft className="w-3 h-3" />
         {t('history:actions.backToList')}
       </button>
 
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 mb-10 border-b border-zinc-200 dark:border-zinc-800">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 sm:pb-10 mb-8 sm:mb-10 border-b border-zinc-200 dark:border-zinc-800">
         <div>
           <p className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 mb-3 flex items-center gap-2">
             <HistoryIcon className="w-3 h-3" /> {t('history:title')}
           </p>
-          <h1 className="text-4xl md:text-5xl font-serif italic font-light text-zinc-900 tracking-tight dark:text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif italic font-light text-zinc-900 tracking-tight dark:text-white">
             {t('history:subtitle')}
           </h1>
         </div>
@@ -75,7 +75,7 @@ export default function HistoryList({ onBack, onOpenEntry }: Props) {
           <button
             onClick={downloadHistoryJson}
             disabled={entries.length === 0}
-            className="inline-flex items-center gap-2 border border-zinc-200 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            className="inline-flex items-center gap-2 border border-zinc-200 px-4 py-2 min-h-[44px] text-[10px] uppercase tracking-[0.2em] text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-900"
           >
             <Download className="w-3 h-3" />
             {t('history:actions.export')}
@@ -83,7 +83,7 @@ export default function HistoryList({ onBack, onOpenEntry }: Props) {
           <button
             onClick={() => setConfirmClearAll(true)}
             disabled={entries.length === 0}
-            className="inline-flex items-center gap-2 border border-rose-200 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-50 disabled:opacity-40 disabled:cursor-not-allowed dark:border-rose-900/60 dark:text-rose-400 dark:hover:bg-rose-950/30"
+            className="inline-flex items-center gap-2 border border-rose-200 px-4 py-2 min-h-[44px] text-[10px] uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-50 disabled:opacity-40 disabled:cursor-not-allowed dark:border-rose-900/60 dark:text-rose-400 dark:hover:bg-rose-950/30"
           >
             <Trash2 className="w-3 h-3" />
             {t('history:actions.clearAll')}
@@ -109,16 +109,19 @@ export default function HistoryList({ onBack, onOpenEntry }: Props) {
               key={entry.id}
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 dark:bg-zinc-950"
+              className="bg-white p-5 sm:p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4 sm:gap-6 dark:bg-zinc-950"
             >
-              <div className="flex-1">
-                <div className="flex items-center gap-4 mb-3">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
                   <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500">
                     {t('history:item.savedAt')}
                   </span>
-                  <span className="font-mono text-sm text-zinc-700 dark:text-zinc-300">{fmt.format(entry.createdAt)}</span>
+                  <span className="font-mono text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">{fmt.format(entry.createdAt)}</span>
                   <span className="text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-600">
                     {entry.language.toUpperCase()}
+                  </span>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-600 border border-zinc-200 px-2 py-0.5 dark:text-zinc-400 dark:border-zinc-800">
+                    {t('history:item.questionCount', { count: entry.quizLength })}
                   </span>
                   {entry.advisorReport && (
                     <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest text-emerald-700 border border-emerald-200 px-2 py-0.5 dark:text-emerald-400 dark:border-emerald-900/60">
@@ -141,14 +144,14 @@ export default function HistoryList({ onBack, onOpenEntry }: Props) {
               <div className="flex gap-3">
                 <button
                   onClick={() => onOpenEntry(entry.id)}
-                  className="inline-flex items-center gap-2 border border-zinc-900 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-zinc-900 hover:bg-zinc-900 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
+                  className="inline-flex items-center gap-2 border border-zinc-900 px-4 py-2 min-h-[44px] text-[10px] uppercase tracking-[0.2em] text-zinc-900 hover:bg-zinc-900 hover:text-white transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                 >
                   <Eye className="w-3 h-3" />
                   {t('history:actions.view')}
                 </button>
                 <button
                   onClick={() => setPendingDelete(entry.id)}
-                  className="inline-flex items-center gap-2 border border-zinc-200 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-zinc-600 hover:border-rose-400 hover:text-rose-600 transition-colors dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-rose-700 dark:hover:text-rose-400"
+                  className="inline-flex items-center justify-center gap-2 border border-zinc-200 px-4 py-2 min-h-[44px] min-w-[44px] text-[10px] uppercase tracking-[0.2em] text-zinc-600 hover:border-rose-400 hover:text-rose-600 transition-colors dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-rose-700 dark:hover:text-rose-400"
                   aria-label={t('history:actions.delete')}
                 >
                   <Trash2 className="w-3 h-3" />

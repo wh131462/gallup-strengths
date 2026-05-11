@@ -1,6 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&display=swap');
 @import "tailwindcss";
 
+/* Self-hosted Noto Serif SC — used for AI advisor markdown. See public/fonts/. */
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-serif-sc-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/noto-serif-sc-latin-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-serif-sc-zh-400.woff2') format('woff2');
+  unicode-range: U+2E80-2FDF, U+3000-303F, U+3100-312F, U+31A0-31BF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/noto-serif-sc-zh-600.woff2') format('woff2');
+  unicode-range: U+2E80-2FDF, U+3000-303F, U+3100-312F, U+31A0-31BF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -8,6 +42,7 @@
   --font-display: "Outfit", sans-serif;
   --font-serif: "Playfair Display", serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-reading: "Playfair Display", "Noto Serif SC", Georgia, "Source Han Serif SC", "Songti SC", "SimSun", serif;
 
   --color-zinc-950: #09090b;
   --color-zinc-900: #0c0c0e;

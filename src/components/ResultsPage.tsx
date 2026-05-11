@@ -4,6 +4,7 @@ import { Sparkles, Download, RefreshCw, KeyRound, BookOpen, Save, ChevronLeft } 
 import confetti from 'canvas-confetti';
 import { useTranslation } from 'react-i18next';
 import { QUESTIONS, STRENGTH_THEMES } from '../constants';
+import { QUESTION_BANK_VERSION } from '../data/questionBank';
 import { StrengthTheme, StrengthDomain, HistoryEntry, DomainScoreSnapshot } from '../types';
 import { analyzeStrengths, AIConfigError } from '../services/aiService';
 import SettingsModal from './SettingsModal';
@@ -20,9 +21,15 @@ interface Props {
   readonly?: boolean;
   entry?: HistoryEntry;
   onBackToHistory?: () => void;
+  /**
+   * Number of questions actually presented in this run. Falls back to the
+   * size of `answers` (legacy/history detail) so existing callers keep
+   * working without passing it explicitly.
+   */
+  quizLength?: number;
 }
 
-export default function ResultsPage({ answers, onRestart, readonly = false, entry, onBackToHistory }: Props) {
+export default function ResultsPage({ answers, onRestart, readonly = false, entry, onBackToHistory, quizLength }: Props) {
   const { t, i18n } = useTranslation(['results', 'strengths', 'common', 'history']);
   const [topThemes, setTopThemes] = useState<StrengthTheme[]>([]);
   const [domainScores, setDomainScores] = useState<DomainScoreSnapshot[]>([]);
@@ -38,6 +45,11 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
   const didInitRef = useRef(false);
 
   const displayLanguage = entry?.language ?? i18n.language;
+  // The history detail view passes an `entry` with quizLength; the live run
+  // passes it via the `quizLength` prop. Fall back to the answer count for
+  // any caller that hasn't been updated yet (or a legacy entry).
+  const effectiveQuizLength =
+    entry?.quizLength ?? quizLength ?? Object.keys(answers).length;
 
   useEffect(() => {
     if (didInitRef.current) return;
@@ -78,7 +90,13 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
 
     STRENGTH_THEMES.forEach((tm) => (themeWeights[tm.name] = 0));
 
-    QUESTIONS.forEach((q) => {
+    // Compute domainMax based ONLY on the questions actually answered so
+    // that short-quiz results scale proportionally instead of looking
+    // artificially tiny against the full bank's denominator.
+    const answeredIds = new Set(Object.keys(answers));
+    const answeredQuestions = QUESTIONS.filter((q) => answeredIds.has(q.id));
+    const baselineQuestions = answeredQuestions.length > 0 ? answeredQuestions : QUESTIONS;
+    baselineQuestions.forEach((q) => {
       domainMax[q.domainA] += 3;
       domainMax[q.domainB] += 3;
     });
@@ -130,6 +148,8 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         answers,
         topThemes: sortedThemes,
         domainScores: domainsData,
+        quizLength: effectiveQuizLength,
+        questionBankVersion: QUESTION_BANK_VERSION,
       };
       try {
         saveEntry(newEntry);
@@ -181,6 +201,8 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
       answers,
       topThemes,
       domainScores,
+      quizLength: effectiveQuizLength,
+      questionBankVersion: QUESTION_BANK_VERSION,
       advisorReport: aiReport
         ? { markdown: aiReport, generatedAt: now, model: loadAIConfig()?.model }
         : undefined,
@@ -217,7 +239,7 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
   const timestampDate = entry ? new Date(entry.createdAt) : new Date();
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
+    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 sm:py-16">
       {readonly && onBackToHistory && (
         <button
           onClick={onBackToHistory}
@@ -228,39 +250,47 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         </button>
       )}
 
-      <header className="flex flex-col md:flex-row justify-between items-end px-0 pt-10 pb-12 border-b border-zinc-200 mb-16 dark:border-zinc-800">
+      <header className="flex flex-col md:flex-row justify-between md:items-end items-start gap-6 md:gap-0 px-0 pt-6 sm:pt-10 pb-8 sm:pb-12 border-b border-zinc-200 mb-10 sm:mb-16 dark:border-zinc-800">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 mb-3 ml-1 flex items-center gap-3">
+          <p className="text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-zinc-500 mb-3 ml-1 flex flex-wrap items-center gap-2 sm:gap-3">
             {t('results:dashboardLabel')}
             {readonly && (
               <span className="text-zinc-400 border border-zinc-300 px-2 py-0.5 text-[9px] dark:border-zinc-700 dark:text-zinc-500">
                 {t('history:badge.readonly')}
               </span>
             )}
+            <span className="text-zinc-500 border border-zinc-300 px-2 py-0.5 text-[9px] dark:border-zinc-700 dark:text-zinc-500">
+              {t('results:basedOn', { count: effectiveQuizLength })}
+            </span>
           </p>
-          <h1 className="text-5xl font-light italic font-serif tracking-tight text-zinc-900 dark:text-white">
-            {t('results:titlePart1')} <span className="text-zinc-400 font-sans not-italic text-3xl mx-6 dark:text-zinc-600">/</span> {t('results:titlePart2')}
+          <h1 className="text-3xl sm:text-5xl font-light italic font-serif tracking-tight text-zinc-900 dark:text-white">
+            {t('results:titlePart1')} <span className="text-zinc-400 font-sans not-italic text-xl sm:text-3xl mx-3 sm:mx-6 dark:text-zinc-600">/</span> {t('results:titlePart2')}
           </h1>
+          {effectiveQuizLength > 0 && effectiveQuizLength < 60 && (
+            <p className="mt-3 text-xs text-zinc-500 italic dark:text-zinc-500">
+              {t('results:shortQuizNotice')}
+            </p>
+          )}
         </div>
-        <div className="text-right hidden md:block">
-          <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">{t('results:timestamp')}</p>
-          <p className="text-xl font-mono text-zinc-700 dark:text-zinc-300">{timestampDate.toLocaleDateString(dateLocale, { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}</p>
+        <div className="text-left md:text-right">
+          <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-1 sm:mb-2">{t('results:timestamp')}</p>
+          <p className="text-base sm:text-xl font-mono text-zinc-700 dark:text-zinc-300">{timestampDate.toLocaleDateString(dateLocale, { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}</p>
         </div>
       </header>
 
-      <div className="flex flex-col lg:flex-row overflow-hidden border border-zinc-200 mb-16 dark:border-zinc-800">
+      <div className="flex flex-col lg:flex-row overflow-hidden border border-zinc-200 mb-12 sm:mb-16 dark:border-zinc-800">
         {/* Left Column: Top Strengths */}
-        <div className="lg:w-3/5 p-12 bg-white flex flex-col gap-12 border-r border-zinc-200 dark:bg-zinc-950 dark:border-zinc-800">
+        <div className="lg:w-3/5 p-6 sm:p-10 md:p-12 bg-white flex flex-col gap-8 sm:gap-12 border-b lg:border-b-0 lg:border-r border-zinc-200 dark:bg-zinc-950 dark:border-zinc-800">
           <div className="relative">
-            <p className="text-[11px] uppercase tracking-widest text-zinc-500 mb-8 border-l border-zinc-300 pl-4 dark:border-zinc-700">{t('results:signatureTheme')}</p>
+            <p className="text-[11px] uppercase tracking-widest text-zinc-500 mb-6 sm:mb-8 border-l border-zinc-300 pl-4 dark:border-zinc-700">{t('results:signatureTheme')}</p>
             {topThemes[0] && (
-              <div className="flex items-start gap-10">
-                <div className="text-8xl md:text-9xl font-serif italic text-zinc-200 leading-none select-none dark:text-zinc-800">01</div>
+              <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-10">
+                <div className="text-5xl sm:text-7xl md:text-9xl font-serif italic text-zinc-200 leading-none select-none dark:text-zinc-800">01</div>
                 <div>
-                  <h2 className="text-5xl md:text-7xl font-serif mb-6 text-zinc-900 uppercase tracking-tighter leading-tight dark:text-white">
+                  <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif mb-4 sm:mb-6 text-zinc-900 uppercase tracking-tighter leading-tight dark:text-white">
                     {themeName(topThemes[0].name)}
                   </h2>
-                  <p className="text-zinc-600 text-xl leading-relaxed max-w-sm font-light italic dark:text-zinc-400">
+                  <p className="text-zinc-600 text-base sm:text-xl leading-relaxed max-w-sm font-light italic dark:text-zinc-400">
                     {themeDesc(topThemes[0].name)}
                   </p>
                 </div>
@@ -270,11 +300,11 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200 overflow-hidden dark:bg-zinc-800 dark:border-zinc-800">
             {topThemes.slice(1).map((theme, index) => (
-              <div key={theme.name} className="p-8 bg-white hover:bg-zinc-50 transition-colors group dark:bg-zinc-950 dark:hover:bg-zinc-900/50">
+              <div key={theme.name} className="p-6 sm:p-8 bg-white hover:bg-zinc-50 transition-colors group dark:bg-zinc-950 dark:hover:bg-zinc-900/50">
                 <p className="text-[9px] text-zinc-500 uppercase tracking-widest mb-2 dark:text-zinc-600">{t('results:themePrefix')}0{index + 2}</p>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-3xl font-serif text-zinc-700 group-hover:text-zinc-900 transition-colors dark:text-zinc-200 dark:group-hover:text-white">{themeName(theme.name)}</h3>
-                  <div className="mt-2 h-0.5 w-10" style={{ backgroundColor: theme.domain === 'Executing' ? '#f43f5e33' : theme.domain === 'Influencing' ? '#f9731633' : theme.domain === 'Relationship Building' ? '#10b98133' : '#3b82f633' }}>
+                <div className="flex justify-between items-center mb-4 gap-3">
+                  <h3 className="text-2xl sm:text-3xl font-serif text-zinc-700 group-hover:text-zinc-900 transition-colors dark:text-zinc-200 dark:group-hover:text-white">{themeName(theme.name)}</h3>
+                  <div className="mt-2 h-0.5 w-10 shrink-0" style={{ backgroundColor: theme.domain === 'Executing' ? '#f43f5e33' : theme.domain === 'Influencing' ? '#f9731633' : theme.domain === 'Relationship Building' ? '#10b98133' : '#3b82f633' }}>
                     <div className="h-full w-4" style={{ backgroundColor: theme.domain === 'Executing' ? '#f43f5e' : theme.domain === 'Influencing' ? '#f97316' : theme.domain === 'Relationship Building' ? '#10b981' : '#3b82f6' }}></div>
                   </div>
                 </div>
@@ -285,9 +315,9 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         </div>
 
         {/* Right Column: Analytics */}
-        <div className="lg:w-2/5 p-12 bg-zinc-50 flex flex-col dark:bg-zinc-900/30">
-          <div className="mb-16">
-            <h3 className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-12 flex items-center justify-between">
+        <div className="lg:w-2/5 p-6 sm:p-10 md:p-12 bg-zinc-50 flex flex-col dark:bg-zinc-900/30">
+          <div className="mb-10 sm:mb-16">
+            <h3 className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-8 sm:mb-12 flex items-center justify-between">
               {t('results:domainsBalance')}
               <div className="flex gap-1">
                 {[1, 2, 3].map((i) => (
@@ -296,12 +326,12 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
               </div>
             </h3>
 
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-12">
               {domainScores.map((ds) => (
                 <div key={ds.domain} className="relative">
-                  <div className="flex justify-between text-[10px] mb-4 uppercase tracking-[0.2em] font-bold">
-                    <span className="text-zinc-600 dark:text-zinc-400">{t(`common:domains.${ds.domain}` as any)}</span>
-                    <span className="text-zinc-500 font-mono dark:text-zinc-600">{ds.full > 0 ? Math.round((ds.value / ds.full) * 100) : 0}%</span>
+                  <div className="flex justify-between text-[10px] mb-3 sm:mb-4 uppercase tracking-[0.2em] font-bold gap-2">
+                    <span className="text-zinc-600 dark:text-zinc-400 truncate">{t(`common:domains.${ds.domain}` as any)}</span>
+                    <span className="text-zinc-500 font-mono dark:text-zinc-600 shrink-0">{ds.full > 0 ? Math.round((ds.value / ds.full) * 100) : 0}%</span>
                   </div>
                   <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800">
                     <motion.div
@@ -315,7 +345,7 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
             </div>
           </div>
 
-          <div className="mt-auto p-10 bg-white border border-zinc-200 relative group overflow-hidden dark:bg-zinc-950 dark:border-zinc-800">
+          <div className="mt-auto p-6 sm:p-10 bg-white border border-zinc-200 relative group overflow-hidden dark:bg-zinc-950 dark:border-zinc-800">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity dark:opacity-5 dark:group-hover:opacity-10">
               <Sparkles className="w-16 h-16" />
             </div>
@@ -375,10 +405,10 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
               </div>
             ) : null}
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-8 sm:mt-10 flex flex-wrap gap-3">
               <button
                 onClick={handleExport}
-                className="flex-1 min-w-[140px] border border-zinc-200 bg-zinc-50 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:bg-white dark:hover:text-black"
+                className="w-full sm:flex-1 sm:min-w-[140px] min-h-[44px] border border-zinc-200 bg-zinc-50 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:bg-white dark:hover:text-black"
               >
                 <Download className="w-3 h-3" />
                 {t('results:export')}
@@ -386,7 +416,7 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
               {readonly ? (
                 <button
                   onClick={onBackToHistory ?? onRestart}
-                  className="flex-1 min-w-[140px] border border-zinc-900 text-zinc-900 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center gap-2 dark:border-white dark:text-white dark:hover:bg-zinc-800"
+                  className="w-full sm:flex-1 sm:min-w-[140px] min-h-[44px] border border-zinc-900 text-zinc-900 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center gap-2 dark:border-white dark:text-white dark:hover:bg-zinc-800"
                 >
                   <ChevronLeft className="w-3 h-3" />
                   {t('history:actions.backToHistory')}
@@ -395,14 +425,14 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
                 <>
                   <button
                     onClick={handleSaveSnapshot}
-                    className="flex-1 min-w-[140px] border border-zinc-200 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 dark:border-zinc-800 dark:hover:bg-white dark:hover:text-black"
+                    className="w-full sm:flex-1 sm:min-w-[140px] min-h-[44px] border border-zinc-200 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 dark:border-zinc-800 dark:hover:bg-white dark:hover:text-black"
                   >
                     <Save className="w-3 h-3" />
                     {snapshotFlash ? t('history:actions.snapshotSaved') : t('history:actions.saveSnapshot')}
                   </button>
                   <button
                     onClick={onRestart}
-                    className="flex-1 min-w-[140px] border border-zinc-900 text-zinc-900 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center gap-2 dark:border-white dark:text-white dark:hover:bg-zinc-800"
+                    className="w-full sm:flex-1 sm:min-w-[140px] min-h-[44px] border border-zinc-900 text-zinc-900 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center gap-2 dark:border-white dark:text-white dark:hover:bg-zinc-800"
                   >
                     <RefreshCw className="w-3 h-3" />
                     {t('results:restart')}
@@ -419,11 +449,11 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="p-12 md:p-20 border border-zinc-200 bg-white relative overflow-hidden mb-24 dark:border-zinc-800 dark:bg-zinc-950"
+          className="p-4 sm:p-8 md:p-20 border border-zinc-200 bg-white relative overflow-hidden mb-16 sm:mb-24 dark:border-zinc-800 dark:bg-zinc-950"
         >
-          <div className="max-w-4xl mx-auto prose prose-headings:font-serif prose-headings:italic prose-headings:font-light prose-headings:tracking-tight prose-p:text-zinc-600 prose-p:font-light prose-p:leading-loose dark:prose-invert dark:prose-p:text-zinc-400">
-            <h2 className="text-4xl text-zinc-900 mb-12 border-b border-zinc-200 pb-8 flex items-center gap-4 dark:text-white dark:border-zinc-800">
-              <span className="text-zinc-300 text-6xl not-italic font-serif dark:text-zinc-700">/</span> {t('results:fullReport')}
+          <div className="max-w-4xl mx-auto prose prose-sm sm:prose-base prose-headings:font-serif prose-headings:italic prose-headings:font-light prose-headings:tracking-tight prose-p:text-zinc-600 prose-p:font-light prose-p:leading-loose dark:prose-invert dark:prose-p:text-zinc-400">
+            <h2 className="text-2xl sm:text-4xl text-zinc-900 mb-8 sm:mb-12 border-b border-zinc-200 pb-6 sm:pb-8 flex items-center gap-3 sm:gap-4 dark:text-white dark:border-zinc-800">
+              <span className="text-zinc-300 text-4xl sm:text-6xl not-italic font-serif dark:text-zinc-700">/</span> {t('results:fullReport')}
             </h2>
             <MarkdownRenderer variant="reader">{aiReport}</MarkdownRenderer>
           </div>

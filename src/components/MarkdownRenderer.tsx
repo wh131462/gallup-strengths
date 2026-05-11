@@ -10,42 +10,74 @@ interface Props {
   className?: string;
 }
 
-function makeComponents(variant: Variant): Components {
-  const body =
-    variant === 'reader'
-      ? 'text-zinc-700 dark:text-zinc-300 font-light text-lg leading-loose'
-      : 'text-zinc-600 dark:text-zinc-400 font-light text-sm leading-relaxed';
+// CommonMark 的 emphasis 规则要求 `**` 满足 left/right-flanking，
+// 当 `**` 紧贴 CJK 字符或中文标点（如 “”、《》）时，flanking 判定失败，
+// 导致 `**...**` 被原样输出。在 `**` 内侧注入 ZWSP 可恢复识别。
+const ZWSP = '​';
+const CJK_OR_PUNCT = /[　-〿一-鿿＀-￯‘’“”—…]/;
 
-  const h1Size = variant === 'reader' ? 'text-4xl' : 'text-xl';
-  const h2Size = variant === 'reader' ? 'text-3xl' : 'text-lg';
-  const h3Size = variant === 'reader' ? 'text-2xl' : 'text-base';
-  const blockGap = variant === 'reader' ? 'my-6' : 'my-3';
+function fixCjkEmphasis(input: string): string {
+  return input
+    .replace(/\*\*([^*\n]+?)\*\*/g, (match, inner: string) => {
+      const first = inner.charAt(0);
+      const last = inner.charAt(inner.length - 1);
+      if (!CJK_OR_PUNCT.test(first) && !CJK_OR_PUNCT.test(last)) return match;
+      return `**${ZWSP}${inner}${ZWSP}**`;
+    })
+    .replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, (match, inner: string) => {
+      const first = inner.charAt(0);
+      const last = inner.charAt(inner.length - 1);
+      if (!CJK_OR_PUNCT.test(first) && !CJK_OR_PUNCT.test(last)) return match;
+      return `*${ZWSP}${inner}${ZWSP}*`;
+    });
+}
+
+function makeComponents(variant: Variant): Components {
+  const isReader = variant === 'reader';
+  const body = isReader
+    ? 'text-zinc-700 dark:text-zinc-300 text-[17px] leading-[1.9]'
+    : 'text-zinc-600 dark:text-zinc-400 font-light text-sm leading-relaxed';
+
+  const h1Size = isReader ? 'text-[28px]' : 'text-xl';
+  const h2Size = isReader ? 'text-[22px]' : 'text-lg';
+  const h3Size = isReader ? 'text-[18px]' : 'text-base';
+  const blockGap = isReader ? 'my-5' : 'my-3';
+  const headingGap = isReader ? 'mt-10 mb-4' : blockGap;
+
+  const headingFont = isReader
+    ? 'font-semibold tracking-tight'
+    : 'font-serif italic font-light tracking-tight';
 
   return {
     h1: ({ children }) => (
-      <h1 className={`${h1Size} font-serif italic font-light tracking-tight text-zinc-900 dark:text-white ${blockGap}`}>
+      <h1 className={`${h1Size} ${headingFont} text-zinc-900 dark:text-white ${isReader ? headingGap : blockGap} ${isReader ? 'pb-3 border-b border-zinc-200 dark:border-zinc-800' : ''}`}>
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className={`${h2Size} font-serif italic font-light tracking-tight text-zinc-900 dark:text-white ${blockGap}`}>
+      <h2 className={`${h2Size} ${headingFont} text-zinc-900 dark:text-white ${isReader ? headingGap : blockGap}`}>
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className={`${h3Size} font-serif italic font-light tracking-tight text-zinc-800 dark:text-zinc-100 ${blockGap}`}>
+      <h3 className={`${h3Size} ${headingFont} text-zinc-800 dark:text-zinc-100 ${isReader ? headingGap : blockGap}`}>
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className={`font-serif italic font-light text-zinc-800 dark:text-zinc-100 ${blockGap}`}>{children}</h4>
+      <h4 className={`${isReader ? 'font-semibold text-[16px]' : 'font-serif italic font-light'} text-zinc-800 dark:text-zinc-100 ${isReader ? 'mt-6 mb-3' : blockGap}`}>{children}</h4>
     ),
     p: ({ children }) => <p className={`${body} ${blockGap}`}>{children}</p>,
-    strong: ({ children }) => <strong className="font-medium text-zinc-900 dark:text-white">{children}</strong>,
+    strong: ({ children }) =>
+      isReader ? (
+        <strong className="font-semibold text-zinc-900 dark:text-white">{children}</strong>
+      ) : (
+        <strong className="font-medium text-zinc-900 dark:text-white">{children}</strong>
+      ),
     em: ({ children }) => <em className="italic text-zinc-800 dark:text-zinc-200">{children}</em>,
-    ul: ({ children }) => <ul className={`list-disc pl-6 space-y-2 ${body} ${blockGap}`}>{children}</ul>,
-    ol: ({ children }) => <ol className={`list-decimal pl-6 space-y-2 ${body} ${blockGap}`}>{children}</ol>,
-    li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    ul: ({ children }) => <ul className={`list-disc pl-6 ${isReader ? 'space-y-3' : 'space-y-2'} ${body} ${blockGap}`}>{children}</ul>,
+    ol: ({ children }) => <ol className={`list-decimal pl-6 ${isReader ? 'space-y-3' : 'space-y-2'} ${body} ${blockGap}`}>{children}</ol>,
+    li: ({ children }) => <li className={isReader ? 'leading-[1.9] pl-1' : 'leading-relaxed'}>{children}</li>,
     blockquote: ({ children }) => (
       <blockquote className={`border-l-2 border-zinc-300 dark:border-zinc-700 pl-4 italic text-zinc-600 dark:text-zinc-400 ${blockGap}`}>
         {children}
@@ -108,10 +140,11 @@ function makeComponents(variant: Variant): Components {
 
 export default function MarkdownRenderer({ children, variant = 'reader', className }: Props) {
   const components = useMemo(() => makeComponents(variant), [variant]);
+  const source = useMemo(() => fixCjkEmphasis(children), [children]);
   return (
-    <div className={className}>
+    <div className={className} style={{ fontFamily: 'var(--font-reading)' }}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-        {children}
+        {source}
       </ReactMarkdown>
     </div>
   );
