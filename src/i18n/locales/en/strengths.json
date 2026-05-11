@@ -1,0 +1,576 @@
+{
+  "themes": {
+    "Achiever": {
+      "name": "Achiever",
+      "description": "Pursues excellence and craves accomplishment.",
+      "longDescription": "People exceptionally talented in the Achiever theme work hard and possess a great deal of stamina. They take immense satisfaction in being busy and productive."
+    },
+    "Arranger": {
+      "name": "Arranger",
+      "description": "Organizes and adapts with flexibility.",
+      "longDescription": "People exceptionally talented in the Arranger theme can organize, but they also have a flexibility that complements this ability."
+    },
+    "Belief": {
+      "name": "Belief",
+      "description": "Driven by core values and meaning.",
+      "longDescription": "People exceptionally talented in the Belief theme have certain core values that are unchanging. From these values emerges a defined purpose for their lives."
+    },
+    "Consistency": {
+      "name": "Consistency",
+      "description": "Treats all equally and values rules.",
+      "longDescription": "People exceptionally talented in the Consistency theme are keenly aware of the need to treat people the same. They crave stable routines and clear rules."
+    },
+    "Deliberative": {
+      "name": "Deliberative",
+      "description": "Thinks carefully to reduce risk.",
+      "longDescription": "People exceptionally talented in the Deliberative theme are best described by the serious care they take in making decisions or choices. They anticipate obstacles."
+    },
+    "Discipline": {
+      "name": "Discipline",
+      "description": "Values order and routine.",
+      "longDescription": "People exceptionally talented in the Discipline theme enjoy routine and structure. Their world is best described by the order they create."
+    },
+    "Focus": {
+      "name": "Focus",
+      "description": "Sets clear goals and stays on course.",
+      "longDescription": "People exceptionally talented in the Focus theme can take a direction, follow through and make the corrections necessary to stay on track. They prioritize, then act."
+    },
+    "Responsibility": {
+      "name": "Responsibility",
+      "description": "Keeps commitments faithfully.",
+      "longDescription": "People exceptionally talented in the Responsibility theme take psychological ownership of what they say they will do. They are committed to stable values such as honesty and loyalty."
+    },
+    "Restorative": {
+      "name": "Restorative",
+      "description": "Loves to solve problems.",
+      "longDescription": "People exceptionally talented in the Restorative theme are adept at dealing with problems. They are good at figuring out what is wrong and resolving it."
+    },
+    "Activator": {
+      "name": "Activator",
+      "description": "Turns thoughts into action.",
+      "longDescription": "People exceptionally talented in the Activator theme can make things happen by turning thoughts into action. They want to do things now, rather than simply talk about them."
+    },
+    "Command": {
+      "name": "Command",
+      "description": "Takes charge with confidence.",
+      "longDescription": "People exceptionally talented in the Command theme have presence. They can take control of a situation and make decisions."
+    },
+    "Communication": {
+      "name": "Communication",
+      "description": "Expresses ideas vividly.",
+      "longDescription": "People exceptionally talented in the Communication theme generally find it easy to put their thoughts into words. They are good conversationalists and presenters."
+    },
+    "Competition": {
+      "name": "Competition",
+      "description": "Strives to win and excel.",
+      "longDescription": "People exceptionally talented in the Competition theme measure their progress against the performance of others. They strive to win first place and revel in contests."
+    },
+    "Maximizer": {
+      "name": "Maximizer",
+      "description": "Turns the merely good into excellence.",
+      "longDescription": "People exceptionally talented in the Maximizer theme focus on strengths as a way to stimulate personal and group excellence. They seek to transform something strong into something superb."
+    },
+    "Self-Assurance": {
+      "name": "Self-Assurance",
+      "description": "Trusts own judgment.",
+      "longDescription": "People exceptionally talented in the Self-Assurance theme feel confident in their ability to manage their own lives. They possess an inner compass that gives them confidence that their decisions are right."
+    },
+    "Significance": {
+      "name": "Significance",
+      "description": "Wants to make a big impact.",
+      "longDescription": "People exceptionally talented in the Significance theme want to be very important in others' eyes. They are independent and want to be recognized."
+    },
+    "Woo": {
+      "name": "Woo",
+      "description": "Wins others over.",
+      "longDescription": "People exceptionally talented in the Woo theme love the challenge of meeting new people and winning them over. They derive satisfaction from breaking the ice and making a connection with someone."
+    },
+    "Adaptability": {
+      "name": "Adaptability",
+      "description": "Lives in the moment.",
+      "longDescription": "People exceptionally talented in the Adaptability theme prefer to go with the flow. They tend to be 'now' people who take things as they come and discover the future one day at a time."
+    },
+    "Connectedness": {
+      "name": "Connectedness",
+      "description": "Sees how everything connects.",
+      "longDescription": "People exceptionally talented in the Connectedness theme have faith in the links among all things. They believe there are few coincidences and that almost every event has meaning."
+    },
+    "Developer": {
+      "name": "Developer",
+      "description": "Spots potential and grows others.",
+      "longDescription": "People exceptionally talented in the Developer theme recognize and cultivate the potential in others. They spot the signs of each small improvement and derive satisfaction from these."
+    },
+    "Empathy": {
+      "name": "Empathy",
+      "description": "Senses the feelings of others.",
+      "longDescription": "People exceptionally talented in the Empathy theme can sense other people's feelings by imagining themselves in others' lives or situations."
+    },
+    "Harmony": {
+      "name": "Harmony",
+      "description": "Seeks consensus and avoids conflict.",
+      "longDescription": "People exceptionally talented in the Harmony theme look for consensus. They don't enjoy conflict; rather, they seek areas of agreement."
+    },
+    "Includer": {
+      "name": "Includer",
+      "description": "Welcomes everyone in.",
+      "longDescription": "People exceptionally talented in the Includer theme accept others. They show awareness of those who feel left out and make an effort to include them."
+    },
+    "Individualization": {
+      "name": "Individualization",
+      "description": "Sees what makes each person unique.",
+      "longDescription": "People exceptionally talented in the Individualization theme are intrigued with the unique qualities of each person. They have a gift for figuring out how different people can work together productively."
+    },
+    "Positivity": {
+      "name": "Positivity",
+      "description": "Brings energy and optimism.",
+      "longDescription": "People exceptionally talented in the Positivity theme have contagious enthusiasm. They are upbeat and can get others excited about what they are going to do."
+    },
+    "Relator": {
+      "name": "Relator",
+      "description": "Builds deep, genuine relationships.",
+      "longDescription": "People exceptionally talented in the Relator theme enjoy close relationships with others. They find deep satisfaction in working hard with friends to achieve a goal."
+    },
+    "Analytical": {
+      "name": "Analytical",
+      "description": "Searches for reasons and patterns.",
+      "longDescription": "People exceptionally talented in the Analytical theme search for reasons and causes. They have the ability to think about all of the factors that might affect a situation."
+    },
+    "Context": {
+      "name": "Context",
+      "description": "Understands the present through the past.",
+      "longDescription": "People exceptionally talented in the Context theme enjoy thinking about the past. They understand the present by researching its history."
+    },
+    "Futuristic": {
+      "name": "Futuristic",
+      "description": "Inspired by what could be.",
+      "longDescription": "People exceptionally talented in the Futuristic theme are inspired by the future and what could be. They energize others with their visions of the future."
+    },
+    "Ideation": {
+      "name": "Ideation",
+      "description": "Fascinated by new ideas.",
+      "longDescription": "People exceptionally talented in the Ideation theme are fascinated by ideas. They are able to find connections between seemingly disparate phenomena."
+    },
+    "Input": {
+      "name": "Input",
+      "description": "Collects information and resources.",
+      "longDescription": "People exceptionally talented in the Input theme have a need to collect and archive. They may accumulate information, ideas, artifacts or even relationships."
+    },
+    "Intellection": {
+      "name": "Intellection",
+      "description": "Loves deep thinking.",
+      "longDescription": "People exceptionally talented in the Intellection theme are characterized by their intellectual activity. They are introspective and appreciate intellectual discussions."
+    },
+    "Learner": {
+      "name": "Learner",
+      "description": "Has a great desire to learn and improve.",
+      "longDescription": "People exceptionally talented in the Learner theme have a great desire to learn and want to continuously improve. The process of learning, rather than the outcome, excites them."
+    },
+    "Strategic": {
+      "name": "Strategic",
+      "description": "Sees patterns and finds the best path.",
+      "longDescription": "People exceptionally talented in the Strategic theme create alternative ways to proceed. Faced with any given scenario, they can quickly spot the relevant patterns and issues."
+    }
+  },
+  "questions": {
+    "1": {
+      "statementA": "I plan out my daily tasks ahead of time.",
+      "statementB": "I prefer to adjust based on whatever comes up."
+    },
+    "2": {
+      "statementA": "In a group, I love taking the initiative to meet new people.",
+      "statementB": "I lean on logic and data to analyze problems."
+    },
+    "3": {
+      "statementA": "Watching others grow gives me a deep sense of accomplishment.",
+      "statementB": "I value rules and fairness — everyone should be treated the same."
+    },
+    "4": {
+      "statementA": "I enjoy taking charge and setting a clear direction.",
+      "statementB": "I prefer to step into others' shoes and feel what they feel."
+    },
+    "5": {
+      "statementA": "I'm endlessly curious about future possibilities.",
+      "statementB": "I pour myself fully into every commitment I make."
+    },
+    "6": {
+      "statementA": "I like to think deeply about the underlying causes of things.",
+      "statementB": "I'm great at coordinating resources for maximum efficiency."
+    },
+    "7": {
+      "statementA": "I'm driven to outperform others through competition.",
+      "statementB": "I love collecting all kinds of information and material."
+    },
+    "8": {
+      "statementA": "I prefer to live in the moment without rigid long-term plans.",
+      "statementB": "I have strong confidence in my ability to solve hard problems."
+    },
+    "9": {
+      "statementA": "I always notice the subtle strengths in others.",
+      "statementB": "I review every decision carefully for hidden risks."
+    },
+    "10": {
+      "statementA": "I love telling compelling stories or sharing perspectives.",
+      "statementB": "I make sense of the present by looking back at history."
+    },
+    "11": {
+      "statementA": "I take pride in finishing every task I commit to.",
+      "statementB": "I'd rather get moving and figure things out along the way."
+    },
+    "12": {
+      "statementA": "A structured routine is what keeps me productive.",
+      "statementB": "I naturally take charge and tell people what needs to happen."
+    },
+    "13": {
+      "statementA": "My core values guide every decision I make.",
+      "statementB": "I love putting ideas into words that move people."
+    },
+    "14": {
+      "statementA": "I push myself to be more productive each day.",
+      "statementB": "I push myself to outperform everyone else."
+    },
+    "15": {
+      "statementA": "I'm energized when I get to fix what's broken.",
+      "statementB": "I'm energized when I turn something good into something exceptional."
+    },
+    "16": {
+      "statementA": "When I make a promise, I see it through no matter what.",
+      "statementB": "I trust my own judgment more than outside advice."
+    },
+    "17": {
+      "statementA": "I keep my eye on a single clear goal and tune out noise.",
+      "statementB": "I want my work to matter visibly to others."
+    },
+    "18": {
+      "statementA": "I treat everyone by the same rules, without exception.",
+      "statementB": "I love walking into a room of strangers and winning them over."
+    },
+    "19": {
+      "statementA": "I weigh the risks carefully before committing to action.",
+      "statementB": "Talking is fine, but action is what actually changes things."
+    },
+    "20": {
+      "statementA": "I rearrange resources on the fly to keep things moving.",
+      "statementB": "When a group stalls, I take control and decide."
+    },
+    "21": {
+      "statementA": "Steady productivity is its own reward for me.",
+      "statementB": "I want my contributions to leave a visible mark."
+    },
+    "22": {
+      "statementA": "Order and routine make me feel grounded.",
+      "statementB": "I'd rather speak up and shape the conversation."
+    },
+    "23": {
+      "statementA": "Diagnosing what's wrong is what excites me most.",
+      "statementB": "Beating the competition is what excites me most."
+    },
+    "24": {
+      "statementA": "I won't compromise on what I stand for.",
+      "statementB": "I'll keep refining something until it's at its peak."
+    },
+    "25": {
+      "statementA": "I commit to one direction and follow it through.",
+      "statementB": "I trust my instincts even when others doubt me."
+    },
+    "26": {
+      "statementA": "I measure my day by what I got done.",
+      "statementB": "I measure my day by who I connected with."
+    },
+    "27": {
+      "statementA": "I love juggling many moving parts at once.",
+      "statementB": "I'd rather smooth out tension than push through it."
+    },
+    "28": {
+      "statementA": "Sticking to the plan is what keeps me focused.",
+      "statementB": "Adjusting on the fly is what keeps me alive."
+    },
+    "29": {
+      "statementA": "I act from a fixed set of values.",
+      "statementB": "I see meaning in how everything is connected."
+    },
+    "30": {
+      "statementA": "Fair rules applied evenly matter most to me.",
+      "statementB": "Making sure no one feels left out matters most to me."
+    },
+    "31": {
+      "statementA": "I'm drawn to broken systems and want to fix them.",
+      "statementB": "I'm drawn to people with potential and want to grow them."
+    },
+    "32": {
+      "statementA": "I show care by delivering on every promise.",
+      "statementB": "I show care by building deep, lasting friendships."
+    },
+    "33": {
+      "statementA": "I stay locked on the goal regardless of mood.",
+      "statementB": "I keep the energy up so the team stays motivated."
+    },
+    "34": {
+      "statementA": "I think twice before I leap.",
+      "statementB": "I leap and reshape my plans in flight."
+    },
+    "35": {
+      "statementA": "Steady output is what gives me satisfaction.",
+      "statementB": "Lifting others' spirits is what gives me satisfaction."
+    },
+    "36": {
+      "statementA": "I fit pieces together to maximize efficiency.",
+      "statementB": "I fit roles to people based on what makes each unique."
+    },
+    "37": {
+      "statementA": "Predictable structure helps me thrive.",
+      "statementB": "Sensing how things connect helps me thrive."
+    },
+    "38": {
+      "statementA": "Principles guide how I respond to people.",
+      "statementB": "Their feelings guide how I respond to people."
+    },
+    "39": {
+      "statementA": "I'd rather face the conflict head-on to fix it.",
+      "statementB": "I'd rather find common ground to avoid the conflict."
+    },
+    "40": {
+      "statementA": "I'd rather treat all colleagues by the same standard.",
+      "statementB": "I'd rather build a few deep, trusted relationships."
+    },
+    "41": {
+      "statementA": "Crossing items off the list satisfies me.",
+      "statementB": "Picking up new knowledge satisfies me."
+    },
+    "42": {
+      "statementA": "I optimize the steps as we go.",
+      "statementB": "I map out alternative paths before we move."
+    },
+    "43": {
+      "statementA": "Order is what unlocks my best work.",
+      "statementB": "New ideas are what unlock my best work."
+    },
+    "44": {
+      "statementA": "My values give me clarity in confusing moments.",
+      "statementB": "Quiet thinking gives me clarity in confusing moments."
+    },
+    "45": {
+      "statementA": "Same rules for everyone, full stop.",
+      "statementB": "Show me the data behind the rule first."
+    },
+    "46": {
+      "statementA": "I focus on the risks right in front of us.",
+      "statementB": "I focus on what could be true five years ahead."
+    },
+    "47": {
+      "statementA": "I narrow down to what matters most.",
+      "statementB": "I gather everything that might matter."
+    },
+    "48": {
+      "statementA": "I follow through on the path I already committed to.",
+      "statementB": "I scan for a better path before committing."
+    },
+    "49": {
+      "statementA": "I roll up my sleeves and fix what's broken.",
+      "statementB": "I dig into root causes before touching anything."
+    },
+    "50": {
+      "statementA": "I'd rather ship a lot than dream a lot.",
+      "statementB": "I'd rather brainstorm boldly even if much never ships."
+    },
+    "51": {
+      "statementA": "I'd rather optimize for the present moment.",
+      "statementB": "I'd rather understand how we got here first."
+    },
+    "52": {
+      "statementA": "Mastering my routine is what sharpens me.",
+      "statementB": "Mastering new domains is what sharpens me."
+    },
+    "53": {
+      "statementA": "I'm anchored by enduring principles.",
+      "statementB": "I'm pulled forward by future possibility."
+    },
+    "54": {
+      "statementA": "Clear, evenly applied rules feel right.",
+      "statementB": "Quiet, deep reflection feels right."
+    },
+    "55": {
+      "statementA": "I keep my eyes forward on the goal.",
+      "statementB": "I look back at history to understand the goal."
+    },
+    "56": {
+      "statementA": "Once we know enough, let's go.",
+      "statementB": "Once we all agree, let's go."
+    },
+    "57": {
+      "statementA": "I'd rather be direct, even bluntly.",
+      "statementB": "I'd rather attune to each person individually."
+    },
+    "58": {
+      "statementA": "I light up presenting to a crowd.",
+      "statementB": "I light up over coffee with one close friend."
+    },
+    "59": {
+      "statementA": "I want to win, even if others fall behind.",
+      "statementB": "I want everyone in the room to feel they belong."
+    },
+    "60": {
+      "statementA": "I'd rather amplify the strongest performers.",
+      "statementB": "I'd rather grow the ones with quiet potential."
+    },
+    "61": {
+      "statementA": "I trust my plan and stick to it.",
+      "statementB": "I trust I'll figure it out as it unfolds."
+    },
+    "62": {
+      "statementA": "I want to stand out and be remembered.",
+      "statementB": "I want to feel part of something larger than me."
+    },
+    "63": {
+      "statementA": "I love widening the circle of acquaintances.",
+      "statementB": "I love understanding each person on their own terms."
+    },
+    "64": {
+      "statementA": "I push the team into motion.",
+      "statementB": "I lift the team's mood."
+    },
+    "65": {
+      "statementA": "Tough calls don't bother me.",
+      "statementB": "I'd rather find a way everyone can live with."
+    },
+    "66": {
+      "statementA": "I'm at my best when I'm shaping the message.",
+      "statementB": "I'm at my best when I'm reading the room."
+    },
+    "67": {
+      "statementA": "I focus the spotlight on the strongest.",
+      "statementB": "I make sure everyone has a seat at the table."
+    },
+    "68": {
+      "statementA": "I want broad recognition.",
+      "statementB": "I want a few loyal, deep friendships."
+    },
+    "69": {
+      "statementA": "Meeting new people excites me.",
+      "statementB": "Sensing how we're all linked grounds me."
+    },
+    "70": {
+      "statementA": "I rely on my own conviction first.",
+      "statementB": "I tune myself to whoever is in front of me."
+    },
+    "71": {
+      "statementA": "Less talk, more action.",
+      "statementB": "More thought first, then maybe action."
+    },
+    "72": {
+      "statementA": "I'd rather decide and move.",
+      "statementB": "I'd rather see all paths first, then move."
+    },
+    "73": {
+      "statementA": "I put what I know into compelling words.",
+      "statementB": "I quietly gather what others might miss."
+    },
+    "74": {
+      "statementA": "I aim to outperform the benchmark.",
+      "statementB": "I aim to understand what drives the benchmark."
+    },
+    "75": {
+      "statementA": "I want to perfect what I'm already great at.",
+      "statementB": "I want to keep learning new things."
+    },
+    "76": {
+      "statementA": "My instincts are my compass.",
+      "statementB": "Wild ideas are my compass."
+    },
+    "77": {
+      "statementA": "I want today's work to matter.",
+      "statementB": "I want tomorrow's possibilities to drive today's work."
+    },
+    "78": {
+      "statementA": "I love starting fresh connections.",
+      "statementB": "I love tracing how things came to be."
+    },
+    "79": {
+      "statementA": "Speed of action matters most.",
+      "statementB": "Choice of path matters most."
+    },
+    "80": {
+      "statementA": "I make the call decisively.",
+      "statementB": "I make the call only once the data is clear."
+    },
+    "81": {
+      "statementA": "I bring the message alive today.",
+      "statementB": "I bring tomorrow's vision alive today."
+    },
+    "82": {
+      "statementA": "Winning the race energizes me.",
+      "statementB": "Generating fresh ideas energizes me."
+    },
+    "83": {
+      "statementA": "I refine until the work shines.",
+      "statementB": "I think until the picture is clear."
+    },
+    "84": {
+      "statementA": "I want to be remembered for impact.",
+      "statementB": "I want to be the one with the deepest knowledge."
+    },
+    "85": {
+      "statementA": "I'd rather meet someone new.",
+      "statementB": "I'd rather learn something new."
+    },
+    "86": {
+      "statementA": "I respond first to how people feel.",
+      "statementB": "I respond first to what the numbers show."
+    },
+    "87": {
+      "statementA": "I look for common ground first.",
+      "statementB": "I look for the best path forward first."
+    },
+    "88": {
+      "statementA": "I make sure no one is left out.",
+      "statementB": "I make sure no idea is dismissed too soon."
+    },
+    "89": {
+      "statementA": "I grow through helping others grow.",
+      "statementB": "I grow through pursuing my own knowledge."
+    },
+    "90": {
+      "statementA": "I take the day as it comes.",
+      "statementB": "I keep my eyes on what's ahead."
+    },
+    "91": {
+      "statementA": "I sense meaning in how things relate now.",
+      "statementB": "I find meaning in how things began."
+    },
+    "92": {
+      "statementA": "I focus on what makes each person unique.",
+      "statementB": "I focus on the patterns that explain people."
+    },
+    "93": {
+      "statementA": "I lift others' moods with energy.",
+      "statementB": "I lift my own thinking through quiet reflection."
+    },
+    "94": {
+      "statementA": "I invest in a few deep relationships.",
+      "statementB": "I invest in collecting wide information."
+    },
+    "95": {
+      "statementA": "I tune into how someone feels right now.",
+      "statementB": "I tune into where they could go next."
+    },
+    "96": {
+      "statementA": "I'd rather avoid friction.",
+      "statementB": "I'd rather entertain bold, edgy ideas."
+    },
+    "97": {
+      "statementA": "I make sure everyone is part of it.",
+      "statementB": "I make sure I'm always growing."
+    },
+    "98": {
+      "statementA": "I see paths for people to grow.",
+      "statementB": "I see paths for the work to win."
+    },
+    "99": {
+      "statementA": "Everything links together for a reason.",
+      "statementB": "Everything benefits from deeper thought."
+    },
+    "100": {
+      "statementA": "Optimism keeps me moving forward.",
+      "statementB": "Knowing the past keeps me grounded."
+    }
+  }
+}

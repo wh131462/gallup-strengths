@@ -1,0 +1,34 @@
+{
+  "reset": "Reset",
+  "cancel": "Cancel",
+  "save": "Save",
+  "close": "Close",
+  "retry": "Retry",
+  "loading": "Loading...",
+  "language": "Language",
+  "languageEnglish": "English",
+  "languageChinese": "中文",
+  "theme": {
+    "toggle": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "footer": {
+    "tagline": "Proprietary Gallup CliftonStrengths Visualization"
+  },
+  "nav": {
+    "brand": "Gallup Strengths Assessment",
+    "aiSettings": "AI Settings",
+    "aiSettingsTitle": "Configure AI Model"
+  },
+  "domains": {
+    "Executing": "Executing",
+    "Influencing": "Influencing",
+    "Relationship Building": "Relationship Building",
+    "Strategic Thinking": "Strategic Thinking",
+    "executingShort": "Executing",
+    "influencingShort": "Influencing",
+    "relationshipShort": "Relationship",
+    "strategicShort": "Strategic"
+  }
+}

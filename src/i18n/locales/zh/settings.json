@@ -1,0 +1,32 @@
+{
+  "title": "AI 模型配置",
+  "description": "配置只保存在你本地浏览器 (localStorage)，不会上传到任何服务器。请求会从浏览器直接发往你设置的 baseUrl。",
+  "apiStyle": "API 风格",
+  "baseUrl": "Base URL",
+  "baseUrlHintOpenAI": "完整路径会自动拼接 /chat/completions",
+  "baseUrlHintAnthropic": "完整路径会自动拼接 /messages",
+  "model": "Model",
+  "apiKey": "API Key",
+  "show": "显示",
+  "hide": "隐藏",
+  "clear": "清除本地配置",
+  "saveConfig": "保存配置",
+  "cancel": "取消",
+  "language": "界面语言",
+  "languageHint": "随时切换界面语言，你的选择会被保存以便下次访问。",
+  "providerLabels": {
+    "openai": "OpenAI 兼容 (OpenAI / DeepSeek / 通义 / Moonshot / Ollama / Gemini OpenAI 端点 ...)",
+    "anthropic": "Anthropic (Claude)"
+  },
+  "refreshModels": "刷新",
+  "modelListUnavailable": "无法获取模型列表，可手动输入",
+  "testConnection": "测试连通性",
+  "testing": "测试中…",
+  "testSuccess": "连接成功",
+  "testFailedAuth": "鉴权失败：API Key 无效或权限不足",
+  "testFailedNotFound": "接口不存在：请检查 Base URL 是否正确",
+  "testFailedNetwork": "无法连接：可能为 CORS 或网络问题",
+  "testFailedTimeout": "请求超时",
+  "testFailedOther": "测试失败",
+  "testErrorDetails": "查看详情"
+}

@@ -1,0 +1,14 @@
+{
+  "module": "评估模块",
+  "contrastLabel": "对比",
+  "of": "/",
+  "completion": "完成进度",
+  "selectWeight": "选择倾向权重",
+  "neutral": "中立",
+  "strongA": "明显倾向 A",
+  "balanced": "中立平衡",
+  "strongB": "明显倾向 B",
+  "back": "上一题",
+  "proceed": "下一题",
+  "analyze": "分析优势"
+}

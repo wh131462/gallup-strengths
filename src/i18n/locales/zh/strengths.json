@@ -1,0 +1,576 @@
+{
+  "themes": {
+    "Achiever": {
+      "name": "成就",
+      "description": "追求卓越，渴望完成任务。",
+      "longDescription": "成就主题突出的人大都精力充沛，锲而不舍。他们以忙碌和高效为乐。"
+    },
+    "Arranger": {
+      "name": "统筹",
+      "description": "善于组织，灵活应变。",
+      "longDescription": "统筹主题突出的人不仅能组织资源，还能灵活地根据变化调整计划。"
+    },
+    "Belief": {
+      "name": "信仰",
+      "description": "核心价值观导向，注重意义。",
+      "longDescription": "信仰主题突出的人拥有某些不可磨灭的核心价值观，并据此定义其生活的意义。"
+    },
+    "Consistency": {
+      "name": "公平",
+      "description": "一视同仁，注重规则。",
+      "longDescription": "公平主题突出的人深切意识到需要一视同仁地对待每个人，制定清晰的规则。"
+    },
+    "Deliberative": {
+      "name": "审慎",
+      "description": "认真思考，降低风险。",
+      "longDescription": "审慎主题突出的人每做一个决定都非常认真，他们往往能预见到风险。"
+    },
+    "Discipline": {
+      "name": "纪律",
+      "description": "注重秩序，按表操课。",
+      "longDescription": "纪律主题突出的人喜欢秩序和常规，他们倾向于将环境结构化。"
+    },
+    "Focus": {
+      "name": "专注",
+      "description": "明确目标，不偏不倚。",
+      "longDescription": "专注主题突出的人能够通过对目标的清晰把握，使大家不偏离预定的方向。"
+    },
+    "Responsibility": {
+      "name": "责任",
+      "description": "信守承诺，言出必行。",
+      "longDescription": "责任主题突出的人会对他们承诺要做的事情产生一种心理上的主人翁精神。"
+    },
+    "Restorative": {
+      "name": "排难",
+      "description": "解决问题，修复漏洞。",
+      "longDescription": "排难主题突出的人热衷于处理问题，享受使事物恢复原样。"
+    },
+    "Activator": {
+      "name": "行动",
+      "description": "将想法付诸实践。",
+      "longDescription": "行动主题突出的人能够让事情发生，他们倾向于通过行动来学习。"
+    },
+    "Command": {
+      "name": "掌控",
+      "description": "主导局势，直言不讳。",
+      "longDescription": "掌控主题突出的人很有主见，他们能够主导局面并勇于面对冲突。"
+    },
+    "Communication": {
+      "name": "沟通",
+      "description": "生动表达，引人入胜。",
+      "longDescription": "沟通主题突出的人喜欢展示、描述、主持和演讲，让事情变得生动。"
+    },
+    "Competition": {
+      "name": "竞争",
+      "description": "追求卓越，力争第一。",
+      "longDescription": "竞争主题突出的人通过参照他人的表现来衡量自己的进步，他们渴望获胜。"
+    },
+    "Maximizer": {
+      "name": "追求极致",
+      "description": "精益求精，化平庸为卓越。",
+      "longDescription": "追求极致主题突出的人专注于发掘潜在的天赋，并将其转化为真正的优势。"
+    },
+    "Self-Assurance": {
+      "name": "自信",
+      "description": "独立思考，掌控命运。",
+      "longDescription": "自信主题突出的人对自己的能力和判断力充满信心，就像拥有一个内置的罗盘。"
+    },
+    "Significance": {
+      "name": "追求",
+      "description": "渴望卓越，追求认可。",
+      "longDescription": "追求主题突出的人希望在他人眼中非常重要，他们渴望别人承认他们的价值。"
+    },
+    "Woo": {
+      "name": "取悦",
+      "description": "赢得他人认可。",
+      "longDescription": "取悦主题突出的人喜欢遇到新面孔，并以此建立联系。"
+    },
+    "Adaptability": {
+      "name": "适应",
+      "description": "随遇而安，活在当下。",
+      "longDescription": "适应主题突出的人倾向于活在当下，认为未来是由现在的选择创造的。"
+    },
+    "Connectedness": {
+      "name": "关联",
+      "description": "万物皆有关联。",
+      "longDescription": "关联主题突出的人坚信万事万物皆有其发生的缘由。"
+    },
+    "Developer": {
+      "name": "伯乐",
+      "description": "识别潜能，助人成长。",
+      "longDescription": "伯乐主题突出的人能识别他人的潜能，并从他人的点滴进步中获得成就感。"
+    },
+    "Empathy": {
+      "name": "共情",
+      "description": "感同身受，理解情感。",
+      "longDescription": "共情主题突出的人能够通过体会他人的处境，感应他人的情感。"
+    },
+    "Harmony": {
+      "name": "和谐",
+      "description": "寻求共识，化解冲突。",
+      "longDescription": "和谐主题突出的人寻找共识，尽量避免直接的冲突。"
+    },
+    "Includer": {
+      "name": "包容",
+      "description": "扩大圈子，不让任何人掉队。",
+      "longDescription": "包容主题突出的人倾向于接纳每个人，让人们感受到属于这个群体的一份子。"
+    },
+    "Individualization": {
+      "name": "个别",
+      "description": "发掘独特，因材施教。",
+      "longDescription": "个别主题突出的人着迷于每个人的独特品质，而不是概而论之。"
+    },
+    "Positivity": {
+      "name": "乐观",
+      "description": "热情洋溢，充满正能量。",
+      "longDescription": "乐观主题突出的人热诚、富有感染力，总能看到事物好的一面。"
+    },
+    "Relator": {
+      "name": "交往",
+      "description": "深厚友谊，真诚交流。",
+      "longDescription": "交往主题突出的人喜欢与老朋友保持紧密的关系，追求深入的交往。"
+    },
+    "Analytical": {
+      "name": "分析",
+      "description": "逻辑严密，追求真相。",
+      "longDescription": "分析主题突出的人寻找原因和规律，他们考虑所有可能影响局势的因素。"
+    },
+    "Context": {
+      "name": "回顾",
+      "description": "通过过去理解现在。",
+      "longDescription": "回顾主题突出的人通过研究过去来理解现在，他们认为历史有迹可循。"
+    },
+    "Futuristic": {
+      "name": "前瞻",
+      "description": "展望未来，激发灵感。",
+      "longDescription": "前瞻主题突出的人被未来所感召，能够清晰地勾勒出未来的蓝图。"
+    },
+    "Ideation": {
+      "name": "理念",
+      "description": "奇思妙想，寻找规律。",
+      "longDescription": "理念主题突出的人对各种想法都很痴迷，喜欢从不同的视角看世界。"
+    },
+    "Input": {
+      "name": "搜集",
+      "description": "积累信息，整合资源。",
+      "longDescription": "搜集主题突出的人拥有好奇心。他们往往喜欢搜集信息、想法、资料。"
+    },
+    "Intellection": {
+      "name": "思维",
+      "description": "深思熟虑，享受思考。",
+      "longDescription": "思维主题突出的人喜欢智力活动，他们喜欢深思。"
+    },
+    "Learner": {
+      "name": "学习",
+      "description": "追求新知，享受过程。",
+      "longDescription": "学习主题突出的人渴望学习，并持续追求进步。"
+    },
+    "Strategic": {
+      "name": "战略",
+      "description": "预见未来，选择路径。",
+      "longDescription": "战略主题突出的人能从混沌中理出头绪，找到最佳路径。"
+    }
+  },
+  "questions": {
+    "1": {
+      "statementA": "我习惯于提前规划好每一天的任务。",
+      "statementB": "我更喜欢根据当下的突发状况灵活调整。"
+    },
+    "2": {
+      "statementA": "在群体中，我喜欢主动去结交新朋友。",
+      "statementB": "我倾向于通过逻辑和数据来分析问题。"
+    },
+    "3": {
+      "statementA": "当看到他人的进步时，我会感到非常有成就感。",
+      "statementB": "我非常看重规则和公平性，认为所有人应一视同仁。"
+    },
+    "4": {
+      "statementA": "我喜欢主导局面，确立明确的方向。",
+      "statementB": "我更愿意站在对方的角度去理解他们的情绪。"
+    },
+    "5": {
+      "statementA": "我对未来的各种可能性充满好奇和想象。",
+      "statementB": "我会对自己承诺过的每一件事倾注全力。"
+    },
+    "6": {
+      "statementA": "我习惯于思考事情背后的深层次原因。",
+      "statementB": "我擅长协调各方资源以达到最高效率。"
+    },
+    "7": {
+      "statementA": "我渴望通过竞争来超越别人。",
+      "statementB": "我喜欢搜集各种各样的信息和资料。"
+    },
+    "8": {
+      "statementA": "我倾向于活在当下，不强求长期计划。",
+      "statementB": "我对自己解决复杂难题的能力非常有信心。"
+    },
+    "9": {
+      "statementA": "我总是能发现别人身上细微的闪光点。",
+      "statementB": "我会反复审视决策中的潜在风险。"
+    },
+    "10": {
+      "statementA": "我喜欢向别人讲述动听的故事或传递观点。",
+      "statementB": "我习惯于通过回顾历史来预测现状的发展。"
+    },
+    "11": {
+      "statementA": "把每一件承诺的事做完，会让我感到自豪。",
+      "statementB": "我更愿意先动起来，边做边摸索方向。"
+    },
+    "12": {
+      "statementA": "规律有序的日程让我保持高效。",
+      "statementB": "我会自然地站出来，告诉大家该怎么做。"
+    },
+    "13": {
+      "statementA": "我的核心价值观指导着我每一个决定。",
+      "statementB": "我喜欢用语言把想法讲得打动人心。"
+    },
+    "14": {
+      "statementA": "我希望每天都比昨天更有产出。",
+      "statementB": "我希望自己的表现能超越所有人。"
+    },
+    "15": {
+      "statementA": "把出问题的东西修好，会让我非常来劲。",
+      "statementB": "把已经不错的东西做到极致，会让我非常来劲。"
+    },
+    "16": {
+      "statementA": "只要我答应过，就一定会兑现，无论如何。",
+      "statementB": "比起他人的建议，我更信任自己的判断。"
+    },
+    "17": {
+      "statementA": "我会盯住一个明确目标，屏蔽外界干扰。",
+      "statementB": "我希望自己做的事能被大家看见并认可。"
+    },
+    "18": {
+      "statementA": "我对所有人都用同一套规则，绝不例外。",
+      "statementB": "我喜欢走进陌生人群，把大家都争取过来。"
+    },
+    "19": {
+      "statementA": "在行动前，我会仔细权衡各种风险。",
+      "statementB": "光说没用，真正改变事情的是行动。"
+    },
+    "20": {
+      "statementA": "我擅长在变化中重新调度资源，让事情运转。",
+      "statementB": "当大家卡住时，我会果断接过主导权做决定。"
+    },
+    "21": {
+      "statementA": "持续稳定的产出本身就是我的回报。",
+      "statementB": "我希望自己的贡献能留下明显的印记。"
+    },
+    "22": {
+      "statementA": "秩序与规律会给我安全感。",
+      "statementB": "我更愿意开口发声，引导讨论的方向。"
+    },
+    "23": {
+      "statementA": "诊断出问题到底错在哪，最让我兴奋。",
+      "statementB": "赢过对手、拿下第一，最让我兴奋。"
+    },
+    "24": {
+      "statementA": "我不会在自己坚持的原则上让步。",
+      "statementB": "我会不断打磨一件事，直到它达到顶点。"
+    },
+    "25": {
+      "statementA": "一旦选定方向，我就会坚定地执行下去。",
+      "statementB": "即便别人怀疑，我仍然相信自己的直觉。"
+    },
+    "26": {
+      "statementA": "我会用当天完成了多少事来衡量这一天。",
+      "statementB": "我会用当天和谁建立了连接来衡量这一天。"
+    },
+    "27": {
+      "statementA": "我喜欢同时处理很多件事情。",
+      "statementB": "我更愿意化解摩擦，而不是硬碰硬。"
+    },
+    "28": {
+      "statementA": "按计划推进能让我保持专注。",
+      "statementB": "随机应变能让我保持活力。"
+    },
+    "29": {
+      "statementA": "我依照一套固定的价值观来行动。",
+      "statementB": "我认为万事万物之间都有意义的关联。"
+    },
+    "30": {
+      "statementA": "对我来说，公平一致的规则最重要。",
+      "statementB": "对我来说，不让任何人掉队最重要。"
+    },
+    "31": {
+      "statementA": "我会被有问题的系统吸引，想把它修好。",
+      "statementB": "我会被有潜力的人吸引，想帮他们成长。"
+    },
+    "32": {
+      "statementA": "我用兑现承诺来表达在意。",
+      "statementB": "我用建立深厚长久的关系来表达在意。"
+    },
+    "33": {
+      "statementA": "不管心情如何，我都能锁定目标。",
+      "statementB": "我会带动气氛，让团队保持斗志。"
+    },
+    "34": {
+      "statementA": "我喜欢三思而后行。",
+      "statementB": "我喜欢先跳进去，边跳边调整。"
+    },
+    "35": {
+      "statementA": "稳定的输出让我有满足感。",
+      "statementB": "提振他人的情绪让我有满足感。"
+    },
+    "36": {
+      "statementA": "我会拼接资源，把效率最大化。",
+      "statementB": "我会根据每个人的特质来安排角色。"
+    },
+    "37": {
+      "statementA": "可预期的结构让我如鱼得水。",
+      "statementB": "感受到事物之间的关联让我如鱼得水。"
+    },
+    "38": {
+      "statementA": "我对人的回应源于我的原则。",
+      "statementB": "我对人的回应源于他们的感受。"
+    },
+    "39": {
+      "statementA": "我更愿意直面冲突，把问题解决掉。",
+      "statementB": "我更愿意寻找共识，避开冲突。"
+    },
+    "40": {
+      "statementA": "我更愿意用同样标准对待所有同事。",
+      "statementB": "我更愿意经营几段深度信任的关系。"
+    },
+    "41": {
+      "statementA": "一件件划掉清单上的事让我满足。",
+      "statementB": "一点点习得新的知识让我满足。"
+    },
+    "42": {
+      "statementA": "我习惯边推进边优化步骤。",
+      "statementB": "我习惯先规划好几条可选路径。"
+    },
+    "43": {
+      "statementA": "秩序能帮我发挥出最好的状态。",
+      "statementB": "新点子能帮我发挥出最好的状态。"
+    },
+    "44": {
+      "statementA": "在混乱时刻，是价值观给我方向。",
+      "statementB": "在混乱时刻，是安静的思考给我方向。"
+    },
+    "45": {
+      "statementA": "一视同仁，对所有人都一样。",
+      "statementB": "先告诉我这条规则背后的数据依据。"
+    },
+    "46": {
+      "statementA": "我关注眼前可能出问题的风险。",
+      "statementB": "我关注五年之后可能会是什么样。"
+    },
+    "47": {
+      "statementA": "我会聚焦到最重要的那件事。",
+      "statementB": "我会尽量收集所有可能有用的信息。"
+    },
+    "48": {
+      "statementA": "我会沿着既定的路径坚持走下去。",
+      "statementB": "在出发前，我会再找找有没有更好的路径。"
+    },
+    "49": {
+      "statementA": "我会卷起袖子，先把坏的修好。",
+      "statementB": "我会先挖清根本原因，再动手。"
+    },
+    "50": {
+      "statementA": "我宁可多做很多，也不想只在空想。",
+      "statementB": "我宁可大胆设想，即便很多想法不会落地。"
+    },
+    "51": {
+      "statementA": "我更关注当下如何做到最优。",
+      "statementB": "我更关注我们是怎么走到今天的。"
+    },
+    "52": {
+      "statementA": "把已有的日常做到精通，会磨砺我。",
+      "statementB": "涉足新的领域去钻研，会磨砺我。"
+    },
+    "53": {
+      "statementA": "长久的原则让我扎根。",
+      "statementB": "未来的可能性拉着我前进。"
+    },
+    "54": {
+      "statementA": "清晰、公平的规则让我觉得踏实。",
+      "statementB": "安静而深入的思考让我觉得踏实。"
+    },
+    "55": {
+      "statementA": "我会盯紧前方的目标。",
+      "statementB": "我会回望历史来理解目标。"
+    },
+    "56": {
+      "statementA": "等我们了解得差不多了，就出发。",
+      "statementB": "等大家都达成一致了，再出发。"
+    },
+    "57": {
+      "statementA": "我更愿意直接表达，甚至显得生硬。",
+      "statementB": "我更愿意针对每个人，采用不同的方式。"
+    },
+    "58": {
+      "statementA": "面对人群做展示让我兴奋。",
+      "statementB": "和一位密友喝杯咖啡让我兴奋。"
+    },
+    "59": {
+      "statementA": "我希望获胜，即使别人因此落后。",
+      "statementB": "我希望在场的每个人都有归属感。"
+    },
+    "60": {
+      "statementA": "我更愿意放大最强者的优势。",
+      "statementB": "我更愿意培养那些默默有潜力的人。"
+    },
+    "61": {
+      "statementA": "我信任计划，会坚持执行。",
+      "statementB": "我相信事到临头自己能想出办法。"
+    },
+    "62": {
+      "statementA": "我希望脱颖而出，让人记住。",
+      "statementB": "我希望成为比自己更大的事物的一部分。"
+    },
+    "63": {
+      "statementA": "我喜欢不断扩大认识的人脉圈。",
+      "statementB": "我喜欢按对方本来的样子去了解他。"
+    },
+    "64": {
+      "statementA": "我会推动团队动起来。",
+      "statementB": "我会让团队的情绪明亮起来。"
+    },
+    "65": {
+      "statementA": "做艰难的决定不会让我不适。",
+      "statementB": "我更愿意找到大家都能接受的方案。"
+    },
+    "66": {
+      "statementA": "我最出彩的时候是在塑造表达。",
+      "statementB": "我最出彩的时候是在读懂氛围。"
+    },
+    "67": {
+      "statementA": "我会把聚光灯打在表现最强的人身上。",
+      "statementB": "我会确保每个人都能有一席之地。"
+    },
+    "68": {
+      "statementA": "我希望获得广泛的认可。",
+      "statementB": "我希望拥有几段忠实而深厚的友情。"
+    },
+    "69": {
+      "statementA": "结识新朋友让我兴奋。",
+      "statementB": "感受到我们彼此相连让我安定。"
+    },
+    "70": {
+      "statementA": "我首先相信自己的判断。",
+      "statementB": "我首先调整自己去贴近面前的人。"
+    },
+    "71": {
+      "statementA": "少说话，多做事。",
+      "statementB": "先深入想一想，再考虑要不要做。"
+    },
+    "72": {
+      "statementA": "我倾向于先决定再行动。",
+      "statementB": "我倾向于先看清所有路径再行动。"
+    },
+    "73": {
+      "statementA": "我把知道的事讲得打动人心。",
+      "statementB": "我默默地搜集他人可能忽略的信息。"
+    },
+    "74": {
+      "statementA": "我的目标是超越基准线。",
+      "statementB": "我的目标是理解基准线背后的驱动力。"
+    },
+    "75": {
+      "statementA": "我想把自己已经擅长的事做到极致。",
+      "statementB": "我想不断学习新的东西。"
+    },
+    "76": {
+      "statementA": "我的直觉就是指南针。",
+      "statementB": "各种奇思妙想就是我的指南针。"
+    },
+    "77": {
+      "statementA": "我希望今天所做的事本身就有意义。",
+      "statementB": "我希望明日的可能性推动今日的行动。"
+    },
+    "78": {
+      "statementA": "我喜欢开启一段新的连接。",
+      "statementB": "我喜欢追溯事情是怎么形成的。"
+    },
+    "79": {
+      "statementA": "最重要的是行动的速度。",
+      "statementB": "最重要的是选对路径。"
+    },
+    "80": {
+      "statementA": "我会果断地做出决定。",
+      "statementB": "我会等数据清晰之后再做决定。"
+    },
+    "81": {
+      "statementA": "我会在今天把讯息讲得鲜活。",
+      "statementB": "我会把未来的画面讲得今天就如在眼前。"
+    },
+    "82": {
+      "statementA": "赢下比赛让我充满干劲。",
+      "statementB": "源源不断冒出新点子让我充满干劲。"
+    },
+    "83": {
+      "statementA": "我会反复打磨到作品闪闪发亮。",
+      "statementB": "我会反复思考到图景清晰分明。"
+    },
+    "84": {
+      "statementA": "我希望因影响力而被记住。",
+      "statementB": "我希望成为最懂这件事的人。"
+    },
+    "85": {
+      "statementA": "我更想去认识一个新的人。",
+      "statementB": "我更想去学习一件新的事。"
+    },
+    "86": {
+      "statementA": "我会先回应一个人的情绪。",
+      "statementB": "我会先回应数据呈现出的事实。"
+    },
+    "87": {
+      "statementA": "我会先找共识在哪里。",
+      "statementB": "我会先找最好的前进路径。"
+    },
+    "88": {
+      "statementA": "我会让每个人都不被遗漏。",
+      "statementB": "我会让每个想法都不被草率否决。"
+    },
+    "89": {
+      "statementA": "帮助他人成长让我自己也在成长。",
+      "statementB": "追求自己的知识让我自己也在成长。"
+    },
+    "90": {
+      "statementA": "我顺其自然地度过每一天。",
+      "statementB": "我把目光放在前方未来。"
+    },
+    "91": {
+      "statementA": "我从当下事物的关联中读出意义。",
+      "statementB": "我从事物的起源中读出意义。"
+    },
+    "92": {
+      "statementA": "我关注每个人身上独一无二的地方。",
+      "statementB": "我关注能够解释人群行为的规律。"
+    },
+    "93": {
+      "statementA": "我用热情带动他人的情绪。",
+      "statementB": "我用安静思考提升自己的认知。"
+    },
+    "94": {
+      "statementA": "我把精力投入到几段深度关系里。",
+      "statementB": "我把精力投入到广泛搜集信息上。"
+    },
+    "95": {
+      "statementA": "我会感知对方当下的情绪。",
+      "statementB": "我会感知对方未来可能走到哪里。"
+    },
+    "96": {
+      "statementA": "我更愿意回避摩擦。",
+      "statementB": "我更愿意拥抱大胆甚至激进的想法。"
+    },
+    "97": {
+      "statementA": "我要确保每个人都身处其中。",
+      "statementB": "我要确保自己一直在成长。"
+    },
+    "98": {
+      "statementA": "我看得到别人成长的路径。",
+      "statementB": "我看得到事情取胜的路径。"
+    },
+    "99": {
+      "statementA": "万事万物皆因关联而发生。",
+      "statementB": "万事万物都值得更深一层的思考。"
+    },
+    "100": {
+      "statementA": "乐观让我持续向前。",
+      "statementB": "了解过去让我脚下踏实。"
+    }
+  }
+}

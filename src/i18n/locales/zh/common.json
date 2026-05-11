@@ -1,0 +1,34 @@
+{
+  "reset": "重置",
+  "cancel": "取消",
+  "save": "保存",
+  "close": "关闭",
+  "retry": "重试",
+  "loading": "加载中...",
+  "language": "语言",
+  "languageEnglish": "English",
+  "languageChinese": "中文",
+  "theme": {
+    "toggle": "主题",
+    "light": "浅色",
+    "dark": "深色"
+  },
+  "footer": {
+    "tagline": "基于盖洛普 CliftonStrengths 的可视化"
+  },
+  "nav": {
+    "brand": "盖洛普优势测评",
+    "aiSettings": "AI 设置",
+    "aiSettingsTitle": "配置 AI 模型"
+  },
+  "domains": {
+    "Executing": "执行力",
+    "Influencing": "影响力",
+    "Relationship Building": "关系建立",
+    "Strategic Thinking": "战略思维",
+    "executingShort": "执行力",
+    "influencingShort": "影响力",
+    "relationshipShort": "关系建立",
+    "strategicShort": "战略思维"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Test History",
+  "subtitle": "Review and compare your past assessments",
+  "openButton": "History",
+  "empty": {
+    "title": "No saved tests yet",
+    "description": "Complete an assessment and it will be saved here automatically."
+  },
+  "privacyNotice": "All records are stored only in this browser. Clearing site data will remove them.",
+  "item": {
+    "savedAt": "Saved",
+    "topThemes": "Top themes",
+    "hasAiReport": "AI report",
+    "noAiReport": "No AI report",
+    "language": "Language"
+  },
+  "actions": {
+    "view": "View",
+    "delete": "Delete",
+    "clearAll": "Clear all",
+    "export": "Export JSON",
+    "saveSnapshot": "Save snapshot",
+    "snapshotSaved": "Snapshot saved",
+    "regenerate": "Regenerate AI report",
+    "backToHistory": "Back to history",
+    "backToList": "Back"
+  },
+  "confirm": {
+    "deleteTitle": "Delete this record?",
+    "deleteDescription": "This cannot be undone.",
+    "clearAllTitle": "Clear all history?",
+    "clearAllDescription": "All saved tests will be removed permanently.",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "badge": {
+    "readonly": "Read-only snapshot"
+  }
+}

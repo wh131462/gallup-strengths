@@ -1,0 +1,14 @@
+{
+  "module": "Assessment Module",
+  "contrastLabel": "Contrast",
+  "of": "of",
+  "completion": "Completion Status",
+  "selectWeight": "Select Weighted Preference",
+  "neutral": "NEUTRAL",
+  "strongA": "Strong Bias A",
+  "balanced": "Balanced Perspective",
+  "strongB": "Strong Bias B",
+  "back": "Back",
+  "proceed": "Proceed",
+  "analyze": "Analyze Strengths"
+}

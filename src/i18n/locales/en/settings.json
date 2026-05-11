@@ -1,0 +1,32 @@
+{
+  "title": "AI Model Configuration",
+  "description": "Settings are stored only in your browser (localStorage) and are never uploaded. Requests go directly from your browser to the baseUrl you set.",
+  "apiStyle": "API Style",
+  "baseUrl": "Base URL",
+  "baseUrlHintOpenAI": "The full path will append /chat/completions automatically",
+  "baseUrlHintAnthropic": "The full path will append /messages automatically",
+  "model": "Model",
+  "apiKey": "API Key",
+  "show": "Show",
+  "hide": "Hide",
+  "clear": "Clear local config",
+  "saveConfig": "Save",
+  "cancel": "Cancel",
+  "language": "Language",
+  "languageHint": "Switch the interface language at any time. Your choice is remembered for next visit.",
+  "providerLabels": {
+    "openai": "OpenAI compatible (OpenAI / DeepSeek / Qwen / Moonshot / Ollama / Gemini OpenAI endpoint ...)",
+    "anthropic": "Anthropic (Claude)"
+  },
+  "refreshModels": "Refresh",
+  "modelListUnavailable": "Could not load model list — you can type a model ID manually",
+  "testConnection": "Test connection",
+  "testing": "Testing…",
+  "testSuccess": "Connected",
+  "testFailedAuth": "Auth failed: API key invalid or unauthorized",
+  "testFailedNotFound": "Endpoint not found: please check Base URL",
+  "testFailedNetwork": "Cannot connect: possible CORS or network issue",
+  "testFailedTimeout": "Request timed out",
+  "testFailedOther": "Test failed",
+  "testErrorDetails": "View details"
+}
