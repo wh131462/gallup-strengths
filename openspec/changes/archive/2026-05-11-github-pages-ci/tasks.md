@@ -15,15 +15,15 @@
 
 ## 3. 仓库设置（一次性手动操作）
 
-- [ ] 3.1 在 GitHub 仓库 Settings → Pages 中将 Source 设置为 "GitHub Actions"
-- [ ] 3.2 确认默认分支为 `master`（与工作流触发分支一致）
+- [x] 3.1 在 GitHub 仓库 Settings → Pages 中将 Source 设置为 "GitHub Actions"
+- [x] 3.2 确认默认分支为 `master`（与工作流触发分支一致）
 
 ## 4. 验证部署
 
-- [ ] 4.1 将变更提交并 push 到 `master`
-- [ ] 4.2 在 Actions 页面观察工作流运行，确认 `build` 与 `deploy` 两个 job 均成功
-- [ ] 4.3 访问 `https://wh131462.github.io/gallup-strengths/`，确认页面加载且静态资源（JS/CSS）请求 200
-- [ ] 4.4 验证 `workflow_dispatch` 手动触发可正常执行
+- [x] 4.1 将变更提交并 push 到 `master`
+- [x] 4.2 在 Actions 页面观察工作流运行，确认 `build` 与 `deploy` 两个 job 均成功
+- [x] 4.3 访问 `https://wh131462.github.io/gallup-strengths/`，确认页面加载且静态资源（JS/CSS）请求 200
+- [x] 4.4 验证 `workflow_dispatch` 手动触发可正常执行
 
 ## 5. 文档
 
