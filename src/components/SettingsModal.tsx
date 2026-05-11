@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { X, Save, Trash2, KeyRound, RefreshCw, Plug, Check, AlertCircle, Loader2, ChevronDown } from 'lucide-react';
+import { X, Save, Trash2, KeyRound, RefreshCw, Plug, Check, AlertCircle, Loader2, ChevronDown, Sparkles, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
   AIConfig,
   AIProvider,
   ANTHROPIC_MODEL_CANDIDATES,
   ConnectivityResult,
+  GLM_FREE_PRESET,
   PROVIDER_PRESETS,
   clearAIConfig,
   fetchOpenAIModels,
@@ -34,6 +35,7 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
   const [apiKey, setApiKey] = useState('');
   const [model, setModel] = useState(PROVIDER_PRESETS.openai.model);
   const [showKey, setShowKey] = useState(false);
+  const [notConfigured, setNotConfigured] = useState(false);
 
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [loadingModels, setLoadingModels] = useState(false);
@@ -56,8 +58,10 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
       if (existing.provider === 'anthropic') {
         setModelOptions(ANTHROPIC_MODEL_CANDIDATES);
       }
+      setNotConfigured(false);
     } else {
       setModelOptions([]);
+      setNotConfigured(true);
     }
     setTestState({ status: 'idle' });
     setModelLoadError(false);
@@ -168,6 +172,7 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
       model: model.trim(),
     };
     saveAIConfig(config);
+    setNotConfigured(false);
     onSaved?.(config);
     onClose();
   };
@@ -180,6 +185,16 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
     setModel(PROVIDER_PRESETS.openai.model);
     setModelOptions([]);
     setTestState({ status: 'idle' });
+    setNotConfigured(true);
+  };
+
+  const handleApplyGlmPreset = () => {
+    setProvider('openai');
+    setBaseUrl(GLM_FREE_PRESET.baseUrl);
+    setModel(GLM_FREE_PRESET.model);
+    setModelOptions([]);
+    setTestState({ status: 'idle' });
+    setModelLoadError(false);
   };
 
   const canTest = !!apiKey.trim() && !!baseUrl.trim() && !!model.trim() && testState.status !== 'loading';
@@ -200,19 +215,49 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 dark:bg-black/70">
-      <div className="w-full max-w-xl bg-white border border-zinc-200 text-zinc-700 max-h-[90vh] overflow-y-auto dark:bg-zinc-950 dark:border-zinc-800 dark:text-zinc-200">
-        <div className="flex justify-between items-center px-8 py-6 border-b border-zinc-200 dark:border-zinc-800">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-2 sm:p-4 dark:bg-black/70">
+      <div className="w-[95vw] sm:w-full max-w-xl bg-white border border-zinc-200 text-zinc-700 max-h-[90vh] overflow-y-auto dark:bg-zinc-950 dark:border-zinc-800 dark:text-zinc-200">
+        <div className="sticky top-0 z-10 flex justify-between items-center px-5 sm:px-8 py-4 sm:py-6 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
           <div className="flex items-center gap-3">
             <KeyRound className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
             <h2 className="text-sm uppercase tracking-[0.3em] font-light">{t('title')}</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+          <button onClick={onClose} aria-label={t('cancel') as string} className="flex items-center justify-center min-h-[44px] min-w-[44px] text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-8 space-y-6 text-sm">
+        <div className="p-5 sm:p-8 space-y-6 text-sm">
+          {notConfigured && (
+            <div className="border border-amber-400/60 bg-amber-50/60 px-4 py-4 dark:border-amber-500/40 dark:bg-amber-500/5">
+              <p className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-amber-700 font-bold mb-2 dark:text-amber-400">
+                <Sparkles className="w-3 h-3" />
+                {t('glmBannerTitle')}
+              </p>
+              <p className="text-[11px] leading-relaxed text-amber-800/90 mb-3 dark:text-amber-300/90">
+                {t('glmBannerBody')}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  onClick={handleApplyGlmPreset}
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-amber-600 text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-amber-700 transition-colors dark:bg-amber-500 dark:text-zinc-950 dark:hover:bg-amber-400"
+                >
+                  <Sparkles className="w-3 h-3" />
+                  {t('glmBannerApply')}
+                </button>
+                <a
+                  href={GLM_FREE_PRESET.signupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 border border-amber-600/60 text-amber-700 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-amber-100 transition-colors dark:border-amber-500/40 dark:text-amber-400 dark:hover:bg-amber-500/10"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  {t('glmBannerGetKey')}
+                </a>
+              </div>
+            </div>
+          )}
           <div>
             <label className="block text-[10px] uppercase tracking-[0.3em] text-zinc-500 mb-3">{t('language')}</label>
             <LanguageSwitcher />
@@ -386,10 +431,10 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
           </div>
         </div>
 
-        <div className="flex justify-between items-center px-8 py-5 border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 px-5 sm:px-8 py-4 sm:py-5 border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
           <button
             onClick={handleClear}
-            className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-rose-500 dark:hover:text-rose-400"
+            className="flex items-center gap-2 min-h-[44px] text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-rose-500 dark:hover:text-rose-400"
           >
             <Trash2 className="w-3 h-3" />
             {t('clear')}
@@ -397,14 +442,14 @@ export default function SettingsModal({ open, onClose, onSaved }: Props) {
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 border border-zinc-200 text-[10px] uppercase tracking-[0.2em] text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-900"
+              className="flex-1 sm:flex-none px-5 py-2.5 min-h-[44px] border border-zinc-200 text-[10px] uppercase tracking-[0.2em] text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-900"
             >
               {t('cancel')}
             </button>
             <button
               onClick={handleSave}
               disabled={!apiKey.trim() || !baseUrl.trim() || !model.trim()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-zinc-900 text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] bg-zinc-900 text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-zinc-200"
             >
               <Save className="w-3 h-3" />
               {t('saveConfig')}

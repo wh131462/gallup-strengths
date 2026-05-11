@@ -1,6 +1,10 @@
 {
   "title": "AI Model Configuration",
   "description": "Settings are stored only in your browser (localStorage) and are never uploaded. Requests go directly from your browser to the baseUrl you set.",
+  "glmBannerTitle": "Recommended Free Option: GLM-4-Flash",
+  "glmBannerBody": "Zhipu AI's GLM-4-Flash is completely free for individual users with stable quality and OpenAI-compatible API. Register on the Zhipu Open Platform, create an API key (takes 30 seconds), then click \"Apply Preset\" below, paste your key, and save.",
+  "glmBannerApply": "Apply GLM-4-Flash Preset",
+  "glmBannerGetKey": "Get API Key",
   "apiStyle": "API Style",
   "baseUrl": "Base URL",
   "baseUrlHintOpenAI": "The full path will append /chat/completions automatically",

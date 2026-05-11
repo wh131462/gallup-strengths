@@ -7,6 +7,12 @@ export interface AIConfig {
   model: string;
 }
 
+export const GLM_FREE_PRESET = {
+  baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
+  model: 'glm-4-flash',
+  signupUrl: 'https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys',
+} as const;
+
 const STORAGE_KEY = 'gallup-strengths.ai-config';
 const REQUEST_TIMEOUT_MS = 10_000;
 
