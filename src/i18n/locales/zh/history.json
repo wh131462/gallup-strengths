@@ -12,7 +12,8 @@
     "topThemes": "主要主题",
     "hasAiReport": "含 AI 报告",
     "noAiReport": "无 AI 报告",
-    "language": "语言"
+    "language": "语言",
+    "questionCount": "{{count}} 题"
   },
   "actions": {
     "view": "查看",

@@ -23,6 +23,21 @@ function isValidStore(value: unknown): value is HistoryStore {
   return typeof v.version === 'number' && Array.isArray(v.entries);
 }
 
+// Back-compat: older entries (pre-optimize-quiz-question-flow) may lack
+// `quizLength` and `questionBankVersion`. Fill them in on read so callers
+// can treat HistoryEntry as fully populated. Original answers are never
+// mutated; missing length is inferred from the answer count.
+function normalizeEntry(entry: HistoryEntry): HistoryEntry {
+  const filled: HistoryEntry = { ...entry };
+  if (typeof filled.quizLength !== 'number') {
+    filled.quizLength = entry.answers ? Object.keys(entry.answers).length : 0;
+  }
+  if (typeof filled.questionBankVersion !== 'string' || filled.questionBankVersion.length === 0) {
+    filled.questionBankVersion = 'legacy';
+  }
+  return filled;
+}
+
 export function loadHistory(): HistoryStore {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -36,6 +51,7 @@ export function loadHistory(): HistoryStore {
       console.warn('[history] stored version newer than supported, returning empty (raw preserved)');
       return emptyStore();
     }
+    parsed.entries = parsed.entries.map(normalizeEntry);
     parsed.entries.sort((a, b) => b.createdAt - a.createdAt);
     return parsed;
   } catch (err) {

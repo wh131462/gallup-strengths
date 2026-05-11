@@ -10,12 +10,41 @@ export interface StrengthTheme {
   domain: StrengthDomain;
 }
 
+export const ALLOWED_QUESTION_SOURCES = [
+  'public-pair-style',
+  'adapted-from-original-pair',
+  'author-original',
+] as const;
+export type QuestionSource = (typeof ALLOWED_QUESTION_SOURCES)[number];
+
+export type QuestionDifficulty = 'easy' | 'standard' | 'deep';
+
 export interface Question {
   id: string;
   domainA: StrengthDomain;
   domainB: StrengthDomain;
   themesA: string[];
   themesB: string[];
+  tags: string[];
+  source: QuestionSource;
+  difficulty?: QuestionDifficulty;
+}
+
+export type QuizLength = 'quick' | 'standard' | 'deep';
+
+export interface QuestionBankMeta {
+  version: string;
+  generatedAt: string;
+}
+
+export interface QuestionBank extends QuestionBankMeta {
+  questions: Question[];
+}
+
+export interface QuizLengthOption {
+  id: QuizLength;
+  count: number;
+  estMinutes: [number, number];
 }
 
 export interface QuizState {
@@ -51,6 +80,8 @@ export interface HistoryEntry {
   domainScores: DomainScoreSnapshot[];
   advisorReport?: AdvisorReportSnapshot;
   note?: string;
+  quizLength: number;
+  questionBankVersion: string;
 }
 
 export interface HistoryStore {

@@ -1,0 +1,22 @@
+{
+  "badge": "Step 01 / Calibrate",
+  "title": "Choose your depth",
+  "subtitle": "Pick the length that matches your time and how much precision you want from the result.",
+  "back": "Back",
+  "start": "Begin Assessment",
+  "recommended": "Recommended",
+  "questions": "Questions",
+  "minutes": "min",
+  "quick": {
+    "name": "Quick",
+    "desc": "Get a fast read on your dominant patterns. Best for first-time curiosity."
+  },
+  "standard": {
+    "name": "Standard",
+    "desc": "Balanced coverage of all 34 themes. The default for most people."
+  },
+  "deep": {
+    "name": "Deep",
+    "desc": "Full bank for the most precise top-5. Worth the extra time before serious decisions."
+  }
+}

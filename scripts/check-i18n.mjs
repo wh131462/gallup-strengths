@@ -41,7 +41,82 @@ for (const target of targets) {
   }
 }
 
+// --- Extra check: every question id in the question bank has both
+// statementA and statementB in strengths.json for each locale. The bank
+// is a TS module so we parse the literal id list with a regex to keep
+// this script dependency-free (no tsx invocation needed in CI).
+const bankSrc = readFileSync(
+  join(__dirname, '..', 'src', 'data', 'questionBank.ts'),
+  'utf8',
+);
+const ids = [];
+const idRe = /\{\s*id:\s*'(\d+)'/g;
+let m;
+while ((m = idRe.exec(bankSrc)) !== null) ids.push(m[1]);
+
+if (ids.length === 0) {
+  console.error('[questionBank] could not parse any question ids');
+  failed = true;
+}
+
+for (const locale of [SOURCE_LOCALE, ...targets]) {
+  let strengths;
+  try {
+    strengths = loadNamespace(locale, 'strengths.json');
+  } catch (err) {
+    console.error(`[${locale}/strengths.json] failed to load`, err.message);
+    failed = true;
+    continue;
+  }
+  const qmap = strengths.questions ?? {};
+  const missing = [];
+  for (const id of ids) {
+    const item = qmap[id];
+    if (!item || typeof item.statementA !== 'string' || typeof item.statementB !== 'string') {
+      missing.push(id);
+    }
+  }
+  if (missing.length) {
+    failed = true;
+    console.error(
+      `[${locale}/strengths.json] missing statementA/B for ${missing.length} question id(s): ${missing.join(', ')}`,
+    );
+  }
+}
+
+// --- Extra check: every question's `source` value must be in the
+// ALLOWED_QUESTION_SOURCES enum declared in src/types.ts.
+const typesSrc = readFileSync(
+  join(__dirname, '..', 'src', 'types.ts'),
+  'utf8',
+);
+const allowedMatch = typesSrc.match(
+  /ALLOWED_QUESTION_SOURCES\s*=\s*\[([\s\S]*?)\]\s*as\s+const/,
+);
+const allowedSources = allowedMatch
+  ? [...allowedMatch[1].matchAll(/'([^']+)'/g)].map((m) => m[1])
+  : [];
+if (allowedSources.length === 0) {
+  console.error('[types] could not parse ALLOWED_QUESTION_SOURCES');
+  failed = true;
+}
+const allowedSet = new Set(allowedSources);
+const sourceRe = /source:\s*'([^']+)'/g;
+const badSources = [];
+let sm;
+while ((sm = sourceRe.exec(bankSrc)) !== null) {
+  if (!allowedSet.has(sm[1])) badSources.push(sm[1]);
+}
+if (badSources.length) {
+  failed = true;
+  console.error(
+    `[questionBank] unknown source value(s): ${[...new Set(badSources)].join(', ')} (allowed: ${[...allowedSet].join(', ')})`,
+  );
+}
+
 if (failed) {
   process.exit(1);
 }
 console.log('i18n key parity OK');
+console.log(`questionBank: ${ids.length} ids covered in all locales; ${allowedSources.length} allowed sources`);
+

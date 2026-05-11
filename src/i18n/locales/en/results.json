@@ -1,5 +1,7 @@
 {
   "dashboardLabel": "Analytical Result Dashboard",
+  "basedOn": "Based on {{count}} questions",
+  "shortQuizNotice": "This is a Quick read. Retake the full version for the most precise top-5.",
   "titlePart1": "Personal Mastery",
   "titlePart2": "Insights Report",
   "timestamp": "Generation Timestamp",
@@ -7,7 +9,7 @@
   "themePrefix": "Theme #",
   "domainsBalance": "Leadership Domains Balance",
   "advisorPerspective": "Advisor Perspective",
-  "needsConfig": "AI service is not yet configured. Set up any model that is OpenAI- or Anthropic-compatible. Your settings stay in your browser only.",
+  "needsConfig": "AI service is not yet configured. We recommend GLM-4-Flash (free, by Zhipu AI), or set up any OpenAI- / Anthropic-compatible model. Settings stay in your browser only.",
   "openSettings": "Open AI Settings",
   "export": "Export",
   "restart": "Restart",

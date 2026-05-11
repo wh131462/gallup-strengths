@@ -12,7 +12,8 @@
     "topThemes": "Top themes",
     "hasAiReport": "AI report",
     "noAiReport": "No AI report",
-    "language": "Language"
+    "language": "Language",
+    "questionCount": "{{count}} questions"
   },
   "actions": {
     "view": "View",

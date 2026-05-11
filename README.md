@@ -9,9 +9,11 @@
 ## 功能特性
 
 - **优势测评**：成对强制选择题，覆盖盖洛普 34 项主题与 4 大领域
+- **三档测评长度**：快速版（30 题，约 3–5 分钟）/ 标准版（60 题，约 6–10 分钟，推荐）/ 完整版（100 题，约 10–15 分钟）。子集按 6 种领域配对均衡确定性采样，保证短版本结果同样有效
+- **结构化题库**：`src/data/questionBank.ts` 维护题库元数据（`version`、`generatedAt`），每题带 `tags` 与 `source` 标注；题面文本继续放在 `src/i18n/locales/{en,zh}/strengths.json`；版本号会写入历史条目用于后续回溯。题目来源策略见 `openspec/changes/optimize-quiz-question-flow/SOURCES.md`
 - **多维结果可视化**：基于 Recharts 的领域得分图谱与 Top 主题展示
 - **AI 顾问报告**（可选）：兼容 OpenAI / DeepSeek / 通义 / Moonshot / Ollama / Gemini OpenAI 端点 / Anthropic Claude
-- **历史记录**：本地存储测评历史，支持回看与对比
+- **历史记录**：本地存储测评历史，记录每次的题目数量与题库版本，支持回看与对比
 - **国际化**：内置 中文 / English，基于 i18next 自动检测
 - **明暗主题**：跟随系统或手动切换，刷新无闪烁
 - **隐私优先**：测评数据与 AI 配置仅存储在浏览器 localStorage，不上传服务器
