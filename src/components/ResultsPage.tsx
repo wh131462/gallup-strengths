@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Download, RefreshCw, KeyRound, BookOpen, Save, ChevronLeft } from 'lucide-react';
+import { Sparkles, Download, RefreshCw, KeyRound, BookOpen, Save, ChevronLeft, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTranslation } from 'react-i18next';
 import { QUESTIONS, STRENGTH_THEMES } from '../constants';
@@ -12,7 +12,7 @@ import MarkdownRenderer from './MarkdownRenderer';
 import ReportReaderModal from './ReportReaderModal';
 import { truncateMarkdown } from './markdown/truncateMarkdown';
 import { generateId, saveEntry, updateEntry } from '../services/historyStorage';
-import { loadAIConfig } from '../services/aiConfig';
+import { loadAIConfig, loadAIConfigStore, setActiveId, AIConfigProfile } from '../services/aiConfig';
 import { downloadReportMarkdown } from '../services/reportExport';
 
 interface Props {
@@ -42,9 +42,43 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
   const [readerOpen, setReaderOpen] = useState(false);
   const [entryId, setEntryId] = useState<string | null>(entry?.id ?? null);
   const [snapshotFlash, setSnapshotFlash] = useState(false);
+  const [retryState, setRetryState] = useState<{ attempt: number; max: number } | null>(null);
+  const [regenerating, setRegenerating] = useState(false);
+  const [modelProfiles, setModelProfiles] = useState<AIConfigProfile[]>([]);
+  const [currentActiveId, setCurrentActiveId] = useState<string | null>(null);
+  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const switcherRef = useRef<HTMLDivElement | null>(null);
   const didInitRef = useRef(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   const displayLanguage = entry?.language ?? i18n.language;
+
+  const refreshModelProfiles = () => {
+    const store = loadAIConfigStore();
+    setModelProfiles(store.profiles);
+    setCurrentActiveId(store.activeId);
+  };
+
+  useEffect(() => {
+    refreshModelProfiles();
+  }, [settingsOpen]);
+
+  useEffect(() => {
+    if (!switcherOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (switcherRef.current && !switcherRef.current.contains(e.target as Node)) {
+        setSwitcherOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, [switcherOpen]);
+
+  const handleSwitchProfile = (id: string) => {
+    setActiveId(id);
+    refreshModelProfiles();
+    setSwitcherOpen(false);
+  };
   // The history detail view passes an `entry` with quizLength; the live run
   // passes it via the `quizLength` prop. Fall back to the answer count for
   // any caller that hasn't been updated yet (or a legacy entry).
@@ -71,6 +105,10 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
       colors: ['#2563eb', '#e11d48', '#059669', '#ea580c'],
     });
     void calculateResults();
+
+    return () => {
+      abortRef.current?.abort();
+    };
   }, []);
 
   const calculateResults = async () => {
@@ -163,11 +201,22 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
   };
 
   const runAnalysis = async (themes: StrengthTheme[]) => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
     setLoadingReport(true);
     setReportError(null);
     setNeedsConfig(false);
+    setRetryState(null);
     try {
-      const report = await analyzeStrengths(themes, displayLanguage);
+      const report = await analyzeStrengths(themes, displayLanguage, {
+        signal: controller.signal,
+        onAttempt: ({ attempt, max }) => {
+          if (controller.signal.aborted) return;
+          setRetryState({ attempt, max });
+        },
+      });
+      if (controller.signal.aborted) return;
       setAiReport(report);
       if (entryId) {
         const cfg = loadAIConfig();
@@ -180,13 +229,29 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         });
       }
     } catch (err) {
+      if (controller.signal.aborted) return;
+      if ((err as { name?: string })?.name === 'AbortError') return;
       if (err instanceof AIConfigError) {
         setNeedsConfig(true);
       } else {
         setReportError(err instanceof Error ? err.message : String(err));
       }
     } finally {
+      if (abortRef.current === controller) abortRef.current = null;
       setLoadingReport(false);
+      setRetryState(null);
+    }
+  };
+
+  const handleRegenerate = async () => {
+    if (regenerating || savedThemes.length === 0) return;
+    setRegenerating(true);
+    setAiReport(null);
+    setReportError(null);
+    try {
+      await runAnalysis(savedThemes);
+    } finally {
+      setRegenerating(false);
     }
   };
 
@@ -352,10 +417,17 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
             <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 mb-6 italic border-b border-zinc-200 pb-4 dark:border-zinc-800">{t('results:advisorPerspective')}</p>
 
             {loadingReport ? (
-              <div className="space-y-4 animate-pulse">
-                <div className="h-4 w-full bg-zinc-200 rounded dark:bg-zinc-800" />
-                <div className="h-4 w-5/6 bg-zinc-200 rounded dark:bg-zinc-800" />
-                <div className="h-4 w-3/4 bg-zinc-200 rounded dark:bg-zinc-800" />
+              <div className="space-y-4">
+                {retryState && retryState.attempt > 1 && (
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500">
+                    {t('common:retrying', { attempt: retryState.attempt, max: retryState.max })}
+                  </p>
+                )}
+                <div className="space-y-4 animate-pulse">
+                  <div className="h-4 w-full bg-zinc-200 rounded dark:bg-zinc-800" />
+                  <div className="h-4 w-5/6 bg-zinc-200 rounded dark:bg-zinc-800" />
+                  <div className="h-4 w-3/4 bg-zinc-200 rounded dark:bg-zinc-800" />
+                </div>
               </div>
             ) : needsConfig ? (
               <div className="space-y-4">
@@ -373,6 +445,23 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
             ) : reportError ? (
               <div className="space-y-4">
                 <div className="text-rose-500 text-xs font-mono leading-relaxed break-words dark:text-rose-400">{reportError}</div>
+                {modelProfiles.length >= 2 && (
+                  <div ref={switcherRef} className="relative">
+                    <button onClick={() => setSwitcherOpen((v) => !v)} className="w-full flex items-center justify-between px-3 py-2 border border-zinc-200 text-[10px] uppercase tracking-[0.2em] text-zinc-600 hover:border-zinc-400 transition-colors dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-500">
+                      <span className="truncate">{t('results:retryWithOther')}: {modelProfiles.find((p) => p.id === currentActiveId)?.name ?? '—'}</span>
+                      <ChevronDown className={`w-3 h-3 ml-2 flex-shrink-0 transition-transform ${switcherOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {switcherOpen && (
+                      <ul className="absolute z-10 mt-1 w-full bg-white border border-zinc-200 shadow-lg max-h-40 overflow-y-auto dark:bg-zinc-950 dark:border-zinc-800">
+                        {modelProfiles.map((p) => (
+                          <li key={p.id}>
+                            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => handleSwitchProfile(p.id)} className={`w-full text-left px-3 py-2 text-[10px] transition-colors ${p.id === currentActiveId ? 'bg-zinc-100 font-bold dark:bg-zinc-900' : 'hover:bg-zinc-50 dark:hover:bg-zinc-900'}`}>{p.name}</button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
                 <button
                   onClick={() => runAnalysis(savedThemes)}
                   className="w-full border border-zinc-300 text-zinc-700 py-3 text-[10px] uppercase tracking-[0.2em] hover:border-zinc-900 hover:text-zinc-900 transition-all dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-white dark:hover:text-white"
@@ -390,6 +479,33 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
                   <BookOpen className="w-3 h-3" />
                   {t('results:openReader')}
                 </button>
+                {(!readonly || savedThemes.length > 0) && (
+                  <button
+                    onClick={handleRegenerate}
+                    disabled={regenerating}
+                    className="w-full border border-zinc-300 text-zinc-700 py-3 text-[10px] uppercase tracking-[0.2em] hover:border-zinc-900 hover:text-zinc-900 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-white dark:hover:text-white"
+                  >
+                    <RefreshCw className={`w-3 h-3 ${regenerating ? 'animate-spin' : ''}`} />
+                    {regenerating ? t('common:regenerating') : t('common:regenerate')}
+                  </button>
+                )}
+                {modelProfiles.length >= 2 && (
+                  <div ref={switcherRef} className="relative">
+                    <button onClick={() => setSwitcherOpen((v) => !v)} className="w-full flex items-center justify-between px-3 py-2 border border-zinc-200 text-[10px] uppercase tracking-[0.15em] text-zinc-500 hover:border-zinc-400 transition-colors dark:border-zinc-800 dark:text-zinc-500 dark:hover:border-zinc-600">
+                      <span className="truncate">{t('results:switchModel')}: {modelProfiles.find((p) => p.id === currentActiveId)?.name ?? '—'}</span>
+                      <ChevronDown className={`w-3 h-3 ml-2 flex-shrink-0 transition-transform ${switcherOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {switcherOpen && (
+                      <ul className="absolute z-10 mt-1 w-full bg-white border border-zinc-200 shadow-lg max-h-40 overflow-y-auto dark:bg-zinc-950 dark:border-zinc-800">
+                        {modelProfiles.map((p) => (
+                          <li key={p.id}>
+                            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => handleSwitchProfile(p.id)} className={`w-full text-left px-3 py-2 text-[10px] transition-colors ${p.id === currentActiveId ? 'bg-zinc-100 font-bold dark:bg-zinc-900' : 'hover:bg-zinc-50 dark:hover:bg-zinc-900'}`}>{p.name}</button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
             ) : readonly ? (
               <div className="space-y-4">
@@ -471,6 +587,8 @@ export default function ResultsPage({ answers, onRestart, readonly = false, entr
         report={aiReport ?? ''}
         onClose={() => setReaderOpen(false)}
         onExport={handleExport}
+        onRegenerate={savedThemes.length > 0 ? handleRegenerate : undefined}
+        regenerating={regenerating}
       />
     </div>
   );

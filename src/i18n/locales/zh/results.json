@@ -15,6 +15,7 @@
   "restart": "重新开始",
   "fullReport": "完整综合报告",
   "openReader": "阅读完整报告",
+  "regenerateHint": "将替换当前报告",
   "closeReader": "关闭",
   "readerTitle": "顾问完整报告",
   "exportDocTitle": "优势导航 · 个人报告",
@@ -29,5 +30,7 @@
   "exportTableDomain": "领域",
   "exportTableScore": "得分",
   "exportTableMax": "满分",
-  "exportNoAiReport": "AI 报告未生成。"
+  "exportNoAiReport": "AI 报告未生成。",
+  "switchModel": "切换模型",
+  "retryWithOther": "换一个配置重试"
 }

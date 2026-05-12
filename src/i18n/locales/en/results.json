@@ -15,6 +15,7 @@
   "restart": "Restart",
   "fullReport": "Full Synthesis Report",
   "openReader": "Read Full Report",
+  "regenerateHint": "Will replace the current report",
   "closeReader": "Close",
   "readerTitle": "Advisor Full Report",
   "exportDocTitle": "Strengths Navigator · Personal Report",
@@ -29,5 +30,7 @@
   "exportTableDomain": "Domain",
   "exportTableScore": "Score",
   "exportTableMax": "Max",
-  "exportNoAiReport": "AI report has not been generated."
+  "exportNoAiReport": "AI report has not been generated.",
+  "switchModel": "Switch model",
+  "retryWithOther": "Retry with another profile"
 }

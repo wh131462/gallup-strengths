@@ -1,7 +1,7 @@
 import { useEffect, useId } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { Download, X } from 'lucide-react';
+import { Download, RefreshCw, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import MarkdownRenderer from './MarkdownRenderer';
 
@@ -10,9 +10,11 @@ interface Props {
   report: string;
   onClose: () => void;
   onExport: () => void;
+  onRegenerate?: () => void;
+  regenerating?: boolean;
 }
 
-export default function ReportReaderModal({ open, report, onClose, onExport }: Props) {
+export default function ReportReaderModal({ open, report, onClose, onExport, onRegenerate, regenerating = false }: Props) {
   const { t } = useTranslation(['results', 'common']);
   const titleId = useId();
 
@@ -82,13 +84,25 @@ export default function ReportReaderModal({ open, report, onClose, onExport }: P
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 px-5 sm:px-8 py-4 sm:py-5 border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40 shrink-0">
-              <button
-                onClick={onExport}
-                className="flex items-center justify-center gap-2 px-4 py-2 min-h-[44px] border border-zinc-300 text-[10px] uppercase tracking-[0.2em] text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
-              >
-                <Download className="w-3 h-3" />
-                {t('results:export')}
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  onClick={onExport}
+                  className="flex items-center justify-center gap-2 px-4 py-2 min-h-[44px] border border-zinc-300 text-[10px] uppercase tracking-[0.2em] text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+                >
+                  <Download className="w-3 h-3" />
+                  {t('results:export')}
+                </button>
+                {onRegenerate && (
+                  <button
+                    onClick={onRegenerate}
+                    disabled={regenerating}
+                    className="flex items-center justify-center gap-2 px-4 py-2 min-h-[44px] border border-zinc-300 text-[10px] uppercase tracking-[0.2em] text-zinc-700 hover:bg-zinc-100 disabled:opacity-50 disabled:cursor-not-allowed dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+                  >
+                    <RefreshCw className={`w-3 h-3 ${regenerating ? 'animate-spin' : ''}`} />
+                    {regenerating ? t('common:regenerating') : t('common:regenerate')}
+                  </button>
+                )}
+              </div>
               <button
                 onClick={onClose}
                 className="px-5 py-2.5 min-h-[44px] border border-zinc-900 text-[10px] uppercase tracking-[0.2em] text-zinc-900 hover:bg-zinc-900 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
