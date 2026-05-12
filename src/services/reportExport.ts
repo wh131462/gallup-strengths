@@ -95,7 +95,9 @@ function todayIsoDate(): string {
 
 export function downloadReportMarkdown(input: ReportExportInput): void {
   const markdown = buildReportMarkdown(input);
-  const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+  // 加 UTF-8 BOM：部分移动端阅读器（微信内置/文件管理器）不识别 MIME charset，
+  // 无 BOM 时会按 GBK 解码导致中文乱码。
+  const blob = new Blob(['﻿', markdown], { type: 'text/markdown;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
