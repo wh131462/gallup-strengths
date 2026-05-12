@@ -32,5 +32,16 @@
   "testFailedNetwork": "Cannot connect: possible CORS or network issue",
   "testFailedTimeout": "Request timed out",
   "testFailedOther": "Test failed",
-  "testErrorDetails": "View details"
+  "testErrorDetails": "View details",
+  "profileName": "Profile Name",
+  "profileNamePlaceholder": "Leave empty to auto-generate",
+  "addProfile": "Add Profile",
+  "editProfile": "Edit",
+  "deleteProfile": "Delete",
+  "deleteConfirm": "Delete this profile?",
+  "setActive": "Set Active",
+  "activeLabel": "Active",
+  "maxProfilesReached": "Limit reached (max {{max}})",
+  "backToList": "Back to list",
+  "noProfiles": "No profiles yet"
 }

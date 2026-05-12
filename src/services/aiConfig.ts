@@ -7,6 +7,17 @@ export interface AIConfig {
   model: string;
 }
 
+export interface AIConfigProfile extends AIConfig {
+  id: string;
+  name: string;
+  createdAt: number;
+}
+
+export interface AIConfigStore {
+  profiles: AIConfigProfile[];
+  activeId: string | null;
+}
+
 export const GLM_FREE_PRESET = {
   baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
   model: 'glm-4-flash',
@@ -14,6 +25,8 @@ export const GLM_FREE_PRESET = {
 } as const;
 
 const STORAGE_KEY = 'gallup-strengths.ai-config';
+const STORE_KEY = 'gallup-strengths.ai-config-profiles';
+const MAX_PROFILES = 10;
 const REQUEST_TIMEOUT_MS = 10_000;
 
 export const PROVIDER_PRESETS: Record<AIProvider, { baseUrl: string; model: string; label: string }> = {
@@ -149,22 +162,135 @@ export async function testConnectivity(
   }
 }
 
-export function loadAIConfig(): AIConfig | null {
+function generateId(): string {
+  return crypto.randomUUID();
+}
+
+export function generateProfileName(provider: AIProvider, model: string): string {
+  const label = provider === 'anthropic' ? 'Anthropic' : 'OpenAI';
+  return `${label} / ${model || '(unnamed)'}`;
+}
+
+function migrateOldConfig(store: AIConfigStore): AIConfigStore {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as AIConfig;
-    if (!parsed.apiKey || !parsed.baseUrl || !parsed.model || !parsed.provider) return null;
-    return parsed;
+    if (!raw) return store;
+    const parsed = JSON.parse(raw);
+    if (parsed._migrated) return store;
+    if (!parsed.apiKey || !parsed.baseUrl || !parsed.model || !parsed.provider) return store;
+    const profile: AIConfigProfile = {
+      id: generateId(),
+      name: generateProfileName(parsed.provider, parsed.model),
+      provider: parsed.provider,
+      baseUrl: parsed.baseUrl,
+      apiKey: parsed.apiKey,
+      model: parsed.model,
+      createdAt: Date.now(),
+    };
+    store.profiles.push(profile);
+    store.activeId = profile.id;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...parsed, _migrated: true }));
+    return store;
   } catch {
-    return null;
+    return store;
   }
 }
 
+export function loadAIConfigStore(): AIConfigStore {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as AIConfigStore;
+      if (Array.isArray(parsed.profiles)) return parsed;
+    }
+  } catch { /* fall through */ }
+  const empty: AIConfigStore = { profiles: [], activeId: null };
+  return migrateOldConfig(empty);
+}
+
+export function saveAIConfigStore(store: AIConfigStore): void {
+  localStorage.setItem(STORE_KEY, JSON.stringify(store));
+}
+
+export function listProfiles(): AIConfigProfile[] {
+  return loadAIConfigStore().profiles;
+}
+
+export function getActiveProfile(): AIConfigProfile | null {
+  const store = loadAIConfigStore();
+  if (!store.activeId) return null;
+  return store.profiles.find((p) => p.id === store.activeId) ?? null;
+}
+
+export function setActiveId(id: string): void {
+  const store = loadAIConfigStore();
+  if (store.profiles.some((p) => p.id === id)) {
+    store.activeId = id;
+    saveAIConfigStore(store);
+  }
+}
+
+export function addProfile(config: Omit<AIConfigProfile, 'id' | 'createdAt'>): AIConfigProfile | null {
+  const store = loadAIConfigStore();
+  if (store.profiles.length >= MAX_PROFILES) return null;
+  const profile: AIConfigProfile = {
+    ...config,
+    id: generateId(),
+    createdAt: Date.now(),
+  };
+  store.profiles.push(profile);
+  if (!store.activeId) store.activeId = profile.id;
+  saveAIConfigStore(store);
+  return profile;
+}
+
+export function updateProfile(id: string, updates: Partial<Omit<AIConfigProfile, 'id' | 'createdAt'>>): void {
+  const store = loadAIConfigStore();
+  const idx = store.profiles.findIndex((p) => p.id === id);
+  if (idx === -1) return;
+  store.profiles[idx] = { ...store.profiles[idx], ...updates };
+  saveAIConfigStore(store);
+}
+
+export function removeProfile(id: string): void {
+  const store = loadAIConfigStore();
+  store.profiles = store.profiles.filter((p) => p.id !== id);
+  if (store.activeId === id) {
+    store.activeId = store.profiles[0]?.id ?? null;
+  }
+  saveAIConfigStore(store);
+}
+
+export function loadAIConfig(): AIConfig | null {
+  const profile = getActiveProfile();
+  if (!profile) return null;
+  return {
+    provider: profile.provider,
+    baseUrl: profile.baseUrl,
+    apiKey: profile.apiKey,
+    model: profile.model,
+  };
+}
+
 export function saveAIConfig(config: AIConfig): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+  const store = loadAIConfigStore();
+  const existing = store.activeId ? store.profiles.find((p) => p.id === store.activeId) : null;
+  if (existing) {
+    existing.provider = config.provider;
+    existing.baseUrl = config.baseUrl;
+    existing.apiKey = config.apiKey;
+    existing.model = config.model;
+    existing.name = generateProfileName(config.provider, config.model);
+    saveAIConfigStore(store);
+  } else {
+    addProfile({
+      name: generateProfileName(config.provider, config.model),
+      ...config,
+    });
+  }
 }
 
 export function clearAIConfig(): void {
-  localStorage.removeItem(STORAGE_KEY);
+  const store: AIConfigStore = { profiles: [], activeId: null };
+  saveAIConfigStore(store);
 }

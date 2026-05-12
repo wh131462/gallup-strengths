@@ -32,5 +32,16 @@
   "testFailedNetwork": "无法连接：可能为 CORS 或网络问题",
   "testFailedTimeout": "请求超时",
   "testFailedOther": "测试失败",
-  "testErrorDetails": "查看详情"
+  "testErrorDetails": "查看详情",
+  "profileName": "配置名称",
+  "profileNamePlaceholder": "留空则自动生成",
+  "addProfile": "新增配置",
+  "editProfile": "编辑",
+  "deleteProfile": "删除",
+  "deleteConfirm": "确定删除此配置？",
+  "setActive": "设为活动",
+  "activeLabel": "当前使用",
+  "maxProfilesReached": "已达上限（最多 {{max}} 条）",
+  "backToList": "返回列表",
+  "noProfiles": "暂无配置"
 }
